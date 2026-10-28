@@ -7,23 +7,15 @@ namespace UI
     public class PlayableInterfaceController : MonoBehaviour
     {
         [SerializeField] PlayerController player;
-        
-        //[SerializeField] Button btnJump;
-        //[SerializeField] Button btnSlash;
-        //[SerializeField] Button btnDefend;
-        
-        void Start()
-        {
-            
-        }
-
-        void Update()
-        {
-        }
 
         public void PauseMenu()
         {
             Debug.Log("Pause Menu");
+        }
+        
+        public void OnAttackButton(bool right)
+        {
+            player.Attack(right);
         }
     }
 }

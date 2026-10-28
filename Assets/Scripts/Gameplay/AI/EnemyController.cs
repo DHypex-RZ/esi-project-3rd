@@ -1,51 +1,43 @@
-using System.Collections;
 using UnityEngine;
+using static Gameplay.AI.EnemyGeneratorController;
 
 namespace Gameplay.AI
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyController : MonoBehaviour
     {
-        [Header("Enemy prefabs")]
-        [SerializeField] GameObject groundEnemies;
-        [SerializeField] GameObject airEnemies;
+        [Header("Movement")]
+        [SerializeField, Min(0.1f)] float moveSpeed = 5f;
+        [SerializeField, Min(0f)] float stopDistance = 1.5f;
 
-        [Header("Spawn points")]
-        [SerializeField] Transform spawnPointForGround;
-        [SerializeField] Transform spawnPointForAir;
+        Rigidbody2D _rb;
 
-        [Header("Spawn timing")]
-        [SerializeField, Min(0.1f)] float minSpawnInterval = 1f;
-        [SerializeField, Min(0.1f)] float maxSpawnInterval = 2.5f;
-        [SerializeField, Min(0.1f)] float initialVelocity = 5f;
-
-        readonly GameObject[] _enemies = new GameObject[3];
-
-        void Start()
+        void Awake()
         {
-            _enemies[0] = groundEnemies;
-            _enemies[1] = airEnemies;
-
-            StartCoroutine(SpawnLoop());
+            _rb = GetComponent<Rigidbody2D>();
         }
 
-        IEnumerator SpawnLoop()
+        void FixedUpdate()
         {
-            while (true) // ToDo: Add timer to finish the iteration 
+            float distance = PlayerPosition.x - _rb.position.x;
+
+            if (Mathf.Abs(distance) <= stopDistance)
             {
-                SpawnRandomEnemy();
-                float interval = Random.Range(minSpawnInterval, Mathf.Max(minSpawnInterval, maxSpawnInterval));
-                yield return new WaitForSeconds(interval);
+                _rb.linearVelocityX = 0f;
+                return;
             }
+
+            _rb.linearVelocityX = Mathf.Sign(distance) * moveSpeed;
         }
-        
-        void SpawnRandomEnemy()
+
+        void OnTriggerEnter2D(Collider2D other)
         {
-            GameObject selected = _enemies[Random.Range(0, _enemies.Length)];
-            Transform spawn = selected == airEnemies ? spawnPointForAir : spawnPointForGround;
-            GameObject ins = Instantiate(selected, spawn.position, Quaternion.identity);
-            
-            if (ins.TryGetComponent(out Rigidbody2D rb)){ rb.AddForceX(-initialVelocity, ForceMode2D.Impulse); }
+            if (other.CompareTag("PlayerAttack")) { TakeDamage(); }
+        }
+
+        void TakeDamage()
+        {
+            Destroy(gameObject);
         }
     }
 }
-

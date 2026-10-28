@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Gameplay.Player
@@ -5,36 +7,38 @@ namespace Gameplay.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] float jumpForce;
-        
-        [SerializeField] GameObject attack;
         [SerializeField] float attackSpeed;
-        
+
+        [Header("Attack areas")]
+        [SerializeField] GameObject attackAreaLeft;
+        [SerializeField] GameObject attackAreaRight;
+        [SerializeField, Min(0.01f)] float attackDuration = 0.2f;
+
         Rigidbody2D _rb;
-        
+
+        void Awake()
+        {
+            attackAreaLeft.SetActive(false);
+            attackAreaRight.SetActive(false);
+        }
+
         void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
         }
 
-        void Update()
+        public void Attack(bool right)
         {
-        
+            GameObject attackArea = right ? attackAreaRight : attackAreaLeft;
+            if (attackArea.activeSelf) return;
+            StartCoroutine(AttackRoutine(attackArea));
         }
 
-        public void Jump()
+        IEnumerator AttackRoutine(GameObject attackArea)
         {
-            _rb.AddForce(transform.up * jumpForce,  ForceMode2D.Impulse);
-        }
-
-        public void Slash()
-        {
-            GameObject ins = Instantiate(attack, transform.position, Quaternion.identity);
-            if (ins.TryGetComponent(out Rigidbody2D rb)){ rb.AddForceX(attackSpeed, ForceMode2D.Impulse); }
-        }
-        
-        public void Defend()
-        {
-            Debug.Log("The player is defending");
+            attackArea.SetActive(true);
+            yield return new WaitForSeconds(attackDuration);
+            attackArea.SetActive(false);
         }
     }
 }
