@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 4199265644085581960}
   - component: {fileID: 6616867796530844293}
   - component: {fileID: 2913862540533041585}
-  - component: {fileID: 6427581667452794071}
+  - component: {fileID: 1606667769578916248}
   m_Layer: 0
-  m_Name: Enemy Ground
-  m_TagString: Untagged
+  m_Name: Slading Enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5442205983371582016}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4199265644085581960
 SpriteRenderer:
   serializedVersion: 2
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.7169812, g: 0.1724813, b: 0.1724813, a: 1}
+  m_Color: {r: 0.7735849, g: 0.55397034, b: 0.24448201, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -167,7 +167,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &6427581667452794071
+--- !u!114 &1606667769578916248
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,8 +176,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5442205983371582016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9b10b7fad364b5a93c71d3421e5866a, type: 3}
+  m_Script: {fileID: 11500000, guid: 14f106bb898b1bb42be7742441598fc4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.AI.EnemyController
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.AI.EnemyType.SlidingEnemy
   moveSpeed: 5
   stopDistance: 1.5
+  queueSpacing: 1
+  score: 25
+  slideDuration: 0.35

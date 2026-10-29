@@ -1,56 +1,49 @@
-using System.Collections;
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Gameplay.AI
 {
     public class EnemyGeneratorController : MonoBehaviour
     {
-        [Header("Enemy config")]
-        [SerializeField] GameObject enemy;
-        
         [Header("Spawn settings")]
         [SerializeField] Transform spawnPointLeft;
         [SerializeField] Transform spawnPointRight;
-        [SerializeField, Min(0.1f)] float minSpawnInterval = 1f;
-        [SerializeField, Min(0.1f)] float maxSpawnInterval = 2.5f;
         [SerializeField] Transform enemyContainer;
         
         [Header("Player")]
         [SerializeField] Transform player;
         
-        public static Vector3 PlayerPosition { get; private set; }
-        
+        public static Vector3 playerPosition { get; private set; }
+
+        [Header("Enemy movement")]
+        [SerializeField, Min(0.1f)] float moveSpeed = 5f;
+        [SerializeField, Min(0f)] float stopDistance = 1.85f;
+        [SerializeField, Min(0f)] float queueSpacing = 4f;
+
+        public static float enemyMoveSpeed { get; private set; }
+        public static float enemyStopDistance { get; private set; }
+        public static float enemySpacing { get; private set; }
+
         void Awake()
         {
-            PlayerPosition = player.position;
+            enemyMoveSpeed = moveSpeed;
+            enemyStopDistance = stopDistance;
+            enemySpacing = queueSpacing;
         }
 
-        void Start()
+        void Start() { playerPosition = player.position; }
+
+        public void SpawnEnemy(GameObject enemyToGenerate)
         {
-            StartCoroutine(SpawnLoop());
+            Transform spawnPoint = Random.value < 0.5f ? spawnPointLeft : spawnPointRight;
+            Instantiate(enemyToGenerate, spawnPoint.position, Quaternion.identity, enemyContainer);
         }
-
-        void Update()
-        {
-            PlayerPosition = player.position;
-        }
-
-        IEnumerator SpawnLoop()
-        {
-            while (true)
-            {
-                SpawnRandomEnemy();
-                float interval = Random.Range(minSpawnInterval, Mathf.Max(minSpawnInterval, maxSpawnInterval));
-                yield return new WaitForSeconds(interval);
-            }
-        }
-
-        void SpawnRandomEnemy()
-        {
-            bool fromLeft = Random.value < 0.5f;
-            Transform spawnPoint = fromLeft ? spawnPointLeft : spawnPointRight;
-
-            Instantiate(enemy, spawnPoint.position, Quaternion.identity, enemyContainer);
-        }
+    }
+    
+    [Serializable] public struct EnemySpawn
+    {
+        public GameObject enemy;
+        [Min(0)] public int count;
     }
 }
