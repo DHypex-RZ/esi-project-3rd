@@ -15,6 +15,8 @@ namespace Gameplay.Player
         [SerializeField, Min(0.01f)] float attackDuration = 0.2f;
 
         Rigidbody2D _rb;
+        Coroutine _attackRoutineLeft;
+        Coroutine _attackRoutineRight;
 
         void Awake()
         {
@@ -31,7 +33,9 @@ namespace Gameplay.Player
         {
             GameObject attackArea = right ? attackAreaRight : attackAreaLeft;
             if (attackArea.activeSelf) return;
-            StartCoroutine(AttackRoutine(attackArea));
+
+            if (right) _attackRoutineRight = StartCoroutine(AttackRoutine(attackArea));
+            else _attackRoutineLeft = StartCoroutine(AttackRoutine(attackArea));
         }
 
         IEnumerator AttackRoutine(GameObject attackArea)
@@ -39,6 +43,31 @@ namespace Gameplay.Player
             attackArea.SetActive(true);
             yield return new WaitForSeconds(attackDuration);
             attackArea.SetActive(false);
+        }
+
+        void StopAttack(bool right)
+        {
+            Coroutine routine = right ? _attackRoutineRight : _attackRoutineLeft;
+            if (routine != null) StopCoroutine(routine);
+
+            if (right)
+            {
+                _attackRoutineRight = null;
+                attackAreaRight.SetActive(false);
+            }
+            else
+            {
+                _attackRoutineLeft = null;
+                attackAreaLeft.SetActive(false);
+            }
+        }
+        
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.CompareTag("Enemy")) return;
+
+            bool right = other.transform.position.x > transform.position.x;
+            StopAttack(right);
         }
     }
 }
