@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,15 +5,11 @@ namespace Gameplay.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] float jumpForce;
-        [SerializeField] float attackSpeed;
-
         [Header("Attack areas")]
         [SerializeField] GameObject attackAreaLeft;
         [SerializeField] GameObject attackAreaRight;
-        [SerializeField, Min(0.01f)] float attackDuration = 0.2f;
+        [SerializeField, Min(0.01f)] float attackDuration;
 
-        Rigidbody2D _rb;
         Coroutine _attackRoutineLeft;
         Coroutine _attackRoutineRight;
 
@@ -22,11 +17,6 @@ namespace Gameplay.Player
         {
             attackAreaLeft.SetActive(false);
             attackAreaRight.SetActive(false);
-        }
-
-        void Start()
-        {
-            _rb = GetComponent<Rigidbody2D>();
         }
 
         public void Attack(bool right)

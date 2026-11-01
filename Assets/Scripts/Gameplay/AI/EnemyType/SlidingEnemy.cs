@@ -8,18 +8,15 @@ namespace Gameplay.AI.EnemyType
     public class SlidingEnemy : EnemyController
     {
         [Header("Slide")]
-        [SerializeField, Min(0.01f)] float slideDuration = 0.35f;
+        [SerializeField, Min(0.01f)] float slideDuration;
 
         bool _hasSlide;
         bool _isSliding;
-        bool _isMovementLocked;
-
 
         protected override void FixedUpdate()
         {
-            if (!_isMovementLocked) base.FixedUpdate();
+            if (!_isSliding) base.FixedUpdate();
         }
-
         
         protected override void TakeDamage()
         {
@@ -39,7 +36,6 @@ namespace Gameplay.AI.EnemyType
         IEnumerator SlideToOppositeSide()
         {
             _isSliding = true;
-            _isMovementLocked = true;
             rb.linearVelocityX = 0f;
 
             Vector2 start = rb.position;
@@ -55,7 +51,6 @@ namespace Gameplay.AI.EnemyType
                 rb.MovePosition(new Vector2(Mathf.Lerp(start.x, target.x, t), rb.position.y));
             }
 
-            _isMovementLocked = false;
             _isSliding = false;
         }
     }

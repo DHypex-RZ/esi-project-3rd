@@ -35,7 +35,7 @@ namespace Gameplay
         {
             while (_totalRemaining > 0)
             {
-                enemyGenerator.SpawnEnemy(PickRandomEnemy());
+                enemyGenerator.SpawnAnEnemy(PickRandomEnemy());
                 float interval = Random.Range(minSpawnInterval, Mathf.Max(minSpawnInterval, maxSpawnInterval));
                 yield return new WaitForSeconds(interval);
             }
