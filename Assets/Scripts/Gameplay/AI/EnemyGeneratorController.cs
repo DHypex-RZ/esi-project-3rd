@@ -13,6 +13,7 @@ namespace Gameplay.AI
         [SerializeField] Transform spawnPointLeft;
         [SerializeField] Transform spawnPointRight;
         [SerializeField] Transform enemyContainer;
+        [SerializeField, Min(0.01f)] float spawnClearanceRadius = 1.25f;
         
         [Header("Global enemy settings")]
         [SerializeField, Min(0.1f)] float speed;
@@ -25,7 +26,6 @@ namespace Gameplay.AI
         public static float enemyStopDistance { get; private set; }
         public static float enemySpacing { get; private set; }
         public static LayerMask enemyLayer { get; private set; }
-        
 
         void Awake()
         {
@@ -35,29 +35,32 @@ namespace Gameplay.AI
             enemyLayer = layer;
         }
 
-        void Start() { playerPosition = player.position; }
-
-        public void SpawnAnEnemy(GameObject enemyToGenerate)
+        void Start()
         {
-            Transform spawnPoint;
-            Quaternion spawnRotation;
+            playerPosition = player.position;
+        }
 
-            if (Random.value < 0.5f)
-            {
-                spawnRotation = Quaternion.Euler(0, 0, 0);
-                spawnPoint = spawnPointLeft;
-            }
-            else
-            {
-                spawnRotation = Quaternion.Euler(0, 180, 0);
-                spawnPoint = spawnPointRight;
-            }
-            
-            Instantiate(enemyToGenerate, spawnPoint.position, spawnRotation, enemyContainer);
+        public bool TrySpawnAnEnemy(GameObject enemyToGenerate)
+        {
+            bool tryLeftFirst = Random.value < 0.5f;
+            Transform firstSpawn = tryLeftFirst ? spawnPointLeft : spawnPointRight;
+            Transform secondSpawn = tryLeftFirst ? spawnPointRight : spawnPointLeft;
+
+            if (TrySpawnAt(enemyToGenerate, firstSpawn)) return true;
+            return TrySpawnAt(enemyToGenerate, secondSpawn);
+        }
+
+        bool TrySpawnAt(GameObject enemyToGenerate, Transform spawnPoint)
+        {
+            if (Physics2D.OverlapCircle(spawnPoint.position, spawnClearanceRadius, enemyLayer)) return false;
+
+            Instantiate(enemyToGenerate, spawnPoint.position, Quaternion.identity, enemyContainer);
+            return true;
         }
     }
-    
-    [Serializable] public struct EnemySpawn
+
+    [Serializable]
+    public struct EnemySpawn
     {
         public GameObject enemy;
         [Min(0)] public int count;

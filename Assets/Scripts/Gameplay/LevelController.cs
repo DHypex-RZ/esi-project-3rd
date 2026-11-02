@@ -6,20 +6,27 @@ using Random = UnityEngine.Random;
 
 namespace Gameplay
 {
-    public class LevelController: MonoBehaviour
+    public class LevelController : MonoBehaviour
     {
         [Header("Enemies")]
         [SerializeField] EnemyGeneratorController enemyGenerator;
         [SerializeField] EnemySpawn[] enemies;
 
         [Header("Spawn timing")]
-        [SerializeField, Min(0.1f)] float minSpawnInterval = 1f;
-        [SerializeField, Min(0.1f)] float maxSpawnInterval = 2.5f;
+        [SerializeField, Min(0.1f)] float minSpawnInterval;
+        [SerializeField, Min(0.1f)] float maxSpawnInterval;
+        [SerializeField, Min(0.1f)] float spawnRetryInterval;
 
         int[] _remaining;
         int _totalRemaining;
 
         void Start()
+        {
+            InitializeEnemyCounts();
+            StartCoroutine(SpawnLoop());
+        }
+
+        void InitializeEnemyCounts()
         {
             _remaining = new int[enemies.Length];
             for (int i = 0; i < enemies.Length; i++)
@@ -27,37 +34,48 @@ namespace Gameplay
                 _remaining[i] = enemies[i].count;
                 _totalRemaining += enemies[i].count;
             }
-
-            StartCoroutine(SpawnLoop());
         }
 
         IEnumerator SpawnLoop()
         {
             while (_totalRemaining > 0)
             {
-                enemyGenerator.SpawnAnEnemy(PickRandomEnemy());
-                float interval = Random.Range(minSpawnInterval, Mathf.Max(minSpawnInterval, maxSpawnInterval));
-                yield return new WaitForSeconds(interval);
+                int enemyIndex = SelectRandomEnemyIndex();
+                while (!enemyGenerator.TrySpawnAnEnemy(enemies[enemyIndex].enemy))
+                {
+                    yield return new WaitForSeconds(spawnRetryInterval);
+                }
+
+                ConsumeEnemy(enemyIndex);
+
+                if (_totalRemaining == 0) yield break;
+                yield return new WaitForSeconds(GetRandomSpawnInterval());
             }
         }
 
-        GameObject PickRandomEnemy()
+        void ConsumeEnemy(int enemyIndex)
+        {
+            _remaining[enemyIndex]--;
+            _totalRemaining--;
+        }
+
+        float GetRandomSpawnInterval()
+        {
+            return Random.Range(minSpawnInterval, Mathf.Max(minSpawnInterval, maxSpawnInterval));
+        }
+
+        int SelectRandomEnemyIndex()
         {
             int pick = Random.Range(0, _totalRemaining);
 
             for (int i = 0; i < _remaining.Length; i++)
             {
-                if (pick < _remaining[i])
-                {
-                    _remaining[i]--;
-                    _totalRemaining--;
-                    return enemies[i].enemy;
-                }
+                if (pick < _remaining[i]) return i;
 
                 pick -= _remaining[i];
             }
 
-            return null;
+            return -1;
         }
     }
 }

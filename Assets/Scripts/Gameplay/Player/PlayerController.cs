@@ -15,17 +15,17 @@ namespace Gameplay.Player
 
         void Awake()
         {
-            attackAreaLeft.SetActive(false);
-            attackAreaRight.SetActive(false);
+            SetAttackAreaActive(false, false);
+            SetAttackAreaActive(true, false);
         }
 
         public void Attack(bool right)
         {
-            GameObject attackArea = right ? attackAreaRight : attackAreaLeft;
+            GameObject attackArea = GetAttackArea(right);
             if (attackArea.activeSelf) return;
 
-            if (right) _attackRoutineRight = StartCoroutine(AttackRoutine(attackArea));
-            else _attackRoutineLeft = StartCoroutine(AttackRoutine(attackArea));
+            Coroutine attackRoutine = StartCoroutine(AttackRoutine(attackArea));
+            SetAttackRoutine(right, attackRoutine);
         }
 
         IEnumerator AttackRoutine(GameObject attackArea)
@@ -37,21 +37,26 @@ namespace Gameplay.Player
 
         void StopAttack(bool right)
         {
-            Coroutine routine = right ? _attackRoutineRight : _attackRoutineLeft;
-            if (routine != null) StopCoroutine(routine);
+            Coroutine attackRoutine = right ? _attackRoutineRight : _attackRoutineLeft;
+            if (attackRoutine != null) StopCoroutine(attackRoutine);
 
-            if (right)
-            {
-                _attackRoutineRight = null;
-                attackAreaRight.SetActive(false);
-            }
-            else
-            {
-                _attackRoutineLeft = null;
-                attackAreaLeft.SetActive(false);
-            }
+            SetAttackRoutine(right, null);
+            SetAttackAreaActive(right, false);
         }
-        
+
+        GameObject GetAttackArea(bool right) => right ? attackAreaRight : attackAreaLeft;
+
+        void SetAttackAreaActive(bool right, bool active)
+        {
+            GetAttackArea(right).SetActive(active);
+        }
+
+        void SetAttackRoutine(bool right, Coroutine routine)
+        {
+            if (right) _attackRoutineRight = routine;
+            else _attackRoutineLeft = routine;
+        }
+
         void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Enemy")) return;

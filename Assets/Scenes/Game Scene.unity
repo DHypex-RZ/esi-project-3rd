@@ -1167,8 +1167,8 @@ MonoBehaviour:
     count: 24
   - enemy: {fileID: 5442205983371582016, guid: 483ea1a4fb5f39a4891fb2586212b4fc, type: 3}
     count: 15
-  minSpawnInterval: 0.75
-  maxSpawnInterval: 1.75
+  minSpawnInterval: 0.65
+  maxSpawnInterval: 1.25
 --- !u!4 &1461791493
 Transform:
   m_ObjectHideFlags: 0
@@ -1847,5 +1847,5 @@ SceneRoots:
   - {fileID: 745024424}
   - {fileID: 633195606}
   - {fileID: 25539148}
-  - {fileID: 609156972}
   - {fileID: 1461791493}
+  - {fileID: 609156972}
