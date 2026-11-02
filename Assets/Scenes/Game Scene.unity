@@ -148,13 +148,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7b68545fc565e43acd83f249897493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.AI.EnemyController
+  player: {fileID: 633195606}
   spawnPointLeft: {fileID: 277937894}
   spawnPointRight: {fileID: 217666217}
   enemyContainer: {fileID: 851594360}
-  player: {fileID: 633195606}
-  moveSpeed: 5
+  speed: 5
   stopDistance: 1.85
   queueSpacing: 2
+  layer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &25539148
 Transform:
   m_ObjectHideFlags: 0
@@ -739,8 +742,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c476680b319e79648accfd529670856a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Core.Player::Player.PlayerController
-  jumpForce: 18.5
-  attackSpeed: 25
   attackAreaLeft: {fileID: 2082263578}
   attackAreaRight: {fileID: 997205673}
   attackDuration: 0.2

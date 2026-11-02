@@ -6,38 +6,54 @@ namespace Gameplay.AI
 {
     public class EnemyGeneratorController : MonoBehaviour
     {
+        [Header("Player")]
+        [SerializeField] Transform player;
+        
         [Header("Spawn settings")]
         [SerializeField] Transform spawnPointLeft;
         [SerializeField] Transform spawnPointRight;
         [SerializeField] Transform enemyContainer;
         
-        [Header("Player")]
-        [SerializeField] Transform player;
-        
+        [Header("Global enemy settings")]
+        [SerializeField, Min(0.1f)] float speed;
+        [SerializeField, Min(0f)] float stopDistance;
+        [SerializeField, Min(0f)] float queueSpacing;
+        [SerializeField] LayerMask layer;
+
         public static Vector3 playerPosition { get; private set; }
-
-        [Header("Enemy movement")]
-        [SerializeField, Min(0.1f)] float moveSpeed = 5f;
-        [SerializeField, Min(0f)] float stopDistance = 1.85f;
-        [SerializeField, Min(0f)] float queueSpacing = 4f;
-
-        public static float enemyMoveSpeed { get; private set; }
+        public static float enemySpeed { get; private set; }
         public static float enemyStopDistance { get; private set; }
         public static float enemySpacing { get; private set; }
+        public static LayerMask enemyLayer { get; private set; }
+        
 
         void Awake()
         {
-            enemyMoveSpeed = moveSpeed;
+            enemySpeed = speed;
             enemyStopDistance = stopDistance;
             enemySpacing = queueSpacing;
+            enemyLayer = layer;
         }
 
         void Start() { playerPosition = player.position; }
 
-        public void SpawnEnemy(GameObject enemyToGenerate)
+        public void SpawnAnEnemy(GameObject enemyToGenerate)
         {
-            Transform spawnPoint = Random.value < 0.5f ? spawnPointLeft : spawnPointRight;
-            Instantiate(enemyToGenerate, spawnPoint.position, Quaternion.identity, enemyContainer);
+            Transform spawnPoint;
+            Quaternion spawnRotation;
+
+            if (Random.value < 0.5f)
+            {
+                spawnRotation = Quaternion.Euler(0, 0, 0);
+                spawnPoint = spawnPointLeft;
+            }
+            else
+            {
+                spawnRotation = Quaternion.Euler(0, 180, 0);
+                spawnPoint = spawnPointRight;
+            }
+            
+            Instantiate(enemyToGenerate, spawnPoint.position, spawnRotation, enemyContainer);
         }
     }
     

@@ -11,22 +11,17 @@ namespace UI
         [SerializeField] PlayerController player;
         [SerializeField] Text scoreText;
 
-        int score { get; set; }
-
-        void Awake()
-        {
-            score = 0;
-        }
+        int _score;
         
         void Start()
         {
-            if (_instance == null) _instance = this;
+            if (!_instance || _instance) _instance = this;
         }
 
         public static void AddScore(int amount)
         {
-            _instance.score += amount;
-            _instance.scoreText.text = _instance.score.ToString();
+            _instance._score += amount;
+            _instance.scoreText.text = _instance._score.ToString();
         }
 
         public void PauseMenu()

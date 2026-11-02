@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using static Gameplay.AI.EnemyGeneratorController;
 
@@ -10,60 +9,30 @@ namespace Gameplay.AI
         [Header("Score")]
         [SerializeField, Min(0)] protected int score;
 
-        protected Rigidbody2D rb { get; private set; }
+        protected Rigidbody2D rb;
 
-        static readonly List<EnemyController> _ActiveEnemies = new();
-        static int _spawnCounter;
-
-        int _spawnOrder;
-
-        void Awake()
-        {
-            rb = GetComponent<Rigidbody2D>();
-            _spawnOrder = _spawnCounter++;
-        }
-
-        void OnEnable() => _ActiveEnemies.Add(this);
-
-        void OnDisable() => _ActiveEnemies.Remove(this);
+        void Awake() => rb = GetComponent<Rigidbody2D>();
 
         protected virtual void FixedUpdate()
         {
-            float distance = playerPosition.x - rb.position.x;
+            float distanceToPlayer = playerPosition.x - rb.position.x;
 
-            if (Mathf.Abs(distance) <= enemyStopDistance || IsBlockedByEnemyAhead(distance))
+            if (Mathf.Abs(distanceToPlayer) <= enemyStopDistance || IsBlockedByEnemyAhead())
             {
-                rb.linearVelocityX = 0f;
+                rb.linearVelocityX = 0;
                 return;
             }
 
-            rb.linearVelocityX = Mathf.Sign(distance) * enemyMoveSpeed;
+            rb.linearVelocityX = Mathf.Sign(distanceToPlayer) * enemySpeed;
         }
-        
-        bool IsBlockedByEnemyAhead(float distance)
+
+        bool IsBlockedByEnemyAhead()
         {
-            float ownDistance = Mathf.Abs(distance);
-
-            foreach (EnemyController other in _ActiveEnemies)
-            {
-                if (other == this) continue;
-
-                float otherDistance = playerPosition.x - other.rb.position.x;
-                if (!Mathf.Approximately(Mathf.Sign(otherDistance), Mathf.Sign(distance))) continue;
-
-                float gap = ownDistance - Mathf.Abs(otherDistance);
-                bool isAhead = gap > 0f || (Mathf.Approximately(gap, 0f) && other._spawnOrder < _spawnOrder);
-
-                if (isAhead && gap < enemySpacing) return true;
-            }
-
-            return false;
+            RaycastHit2D hit = Physics2D.Raycast(rb.position, transform.right, enemySpacing, enemyLayer);
+            return hit && hit.distance < enemySpacing;
         }
 
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("PlayerAttack")) TakeDamage();
-        }
+        void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("PlayerAttack")) TakeDamage(); }
 
         protected abstract void TakeDamage();
     }
