@@ -1,117 +1,51 @@
 using System;
 using UnityEngine;
-using static Gameplay.AI.EnemyController;
-
+using static Gameplay.Player.PlayerController;
 
 namespace Gameplay.AI.Behavior.Modules
 {
     [Serializable]
     internal sealed class EnemyMovementBehavior : EnemyBehaviorModule
     {
-        const float _SEPARATION_SKIN = 0.01f;
+        [SerializeField, Min(0.1f)] float speed;
+        [SerializeField, Min(0f)] float stopDistance;
+        [SerializeField, Min(0f)] float safeDistance = 1.25f;
+        [SerializeField, Min(0f)] float releaseDistance = 1f;
+        [SerializeField] LayerMask layer;
 
-        [SerializeField, Min(0.1f)] float speed = 5f;
-        [SerializeField, Min(0f)] float stopDistance = 1.85f;
-        [SerializeField, Min(0f)] float enemySpacing = 2f;
-
-        [NonSerialized] EnemyCollisionBehavior _collision;
-        [NonSerialized] EnemyAttackBehavior _attack;
-
-        protected override void OnInitialize()
+        protected internal override void FixedUpdate()
         {
-            _collision = controller.collisions;
-            _attack = controller.attack;
-        }
+            if (!enabled) return;
+            
 
-        public void Tick(bool movementIsOverridden)
-        {
-            if (!movementIsOverridden) MoveTowardsPlayer();
-            PreventOverlap();
-        }
-
-        public EnemyController MoveSafely(Vector2 targetPosition)
-        {
-            Vector2 currentPosition = controller.rb.position;
-            Vector2 displacement = targetPosition - currentPosition;
-            float distance = Mathf.Abs(displacement.x);
-
-            if (distance <= Mathf.Epsilon)
+            if (IsEnemyAhead(out RaycastHit2D hit))
             {
-                controller.rb.MovePosition(targetPosition);
-                return null;
-            }
-
-            Vector2 direction = Vector2.right * Mathf.Sign(displacement.x);
-            Vector2 safePosition = targetPosition;
-            EnemyController blockingEnemy = null;
-
-            if (_collision.TryFindNearestEnemy(
-                    direction,
-                    distance + _SEPARATION_SKIN,
-                    out EnemyController nearestEnemy,
-                    out float hitDistance))
-            {
-                float safeDistance = Mathf.Min(distance, Mathf.Max(0f, hitDistance - _SEPARATION_SKIN));
-                safePosition.x = currentPosition.x + direction.x * safeDistance;
-                if (safeDistance < distance) blockingEnemy = nearestEnemy;
-            }
-
-            controller.rb.MovePosition(safePosition);
-            return blockingEnemy;
-        }
-
-        void MoveTowardsPlayer()
-        {
-            if (player is null)
-            {
-                controller.rb.linearVelocityX = 0f;
+                MoveAway(hit.transform);
                 return;
             }
 
+            MoveForwards();
+        }
+
+        void MoveAway(Transform other)
+        {
+            float distanceToOther = other.position.x - controller.rb.position.x;
+            
+            controller.rb.linearVelocityX = Mathf.Abs(distanceToOther) <= releaseDistance ? 0f : -controller.transform.right.x * speed;
+        }
+
+        bool IsEnemyAhead(out RaycastHit2D hit)
+        {
+            hit = Physics2D.Raycast(controller.transform.position, controller.transform.right, safeDistance, layer);
+            
+            return hit.collider;
+        }
+
+        void MoveForwards()
+        {
             float distanceToPlayer = playerPosition.x - controller.rb.position.x;
-            float directionToPlayer = Mathf.Sign(distanceToPlayer);
 
-            if (Mathf.Abs(distanceToPlayer) <= stopDistance)
-            {
-                controller.rb.linearVelocityX = 0f;
-                if (!_collision.IsPathBlocked(Vector2.right * directionToPlayer, enemySpacing))
-                {
-                    _attack.Tick();
-                }
-
-                return;
-            }
-
-            _attack.Reset();
-
-            if (_collision.IsPathBlocked(Vector2.right * directionToPlayer, enemySpacing))
-            {
-                controller.rb.linearVelocityX = 0f;
-                return;
-            }
-
-            controller.rb.linearVelocityX = directionToPlayer * speed;
-        }
-
-        void PreventOverlap()
-        {
-            float velocityX = controller.rb.linearVelocityX;
-            if (Mathf.Approximately(velocityX, 0f)) return;
-
-            Vector2 direction = Vector2.right * Mathf.Sign(velocityX);
-            float stepDistance = Mathf.Abs(velocityX) * Time.fixedDeltaTime;
-
-            if (!_collision.TryFindNearestEnemy(
-                    direction,
-                    stepDistance + _SEPARATION_SKIN,
-                    out _,
-                    out float hitDistance))
-            {
-                return;
-            }
-
-            float safeDistance = Mathf.Max(0f, hitDistance - _SEPARATION_SKIN);
-            controller.rb.linearVelocityX = Mathf.Sign(velocityX) * safeDistance / Time.fixedDeltaTime;
+            controller.rb.linearVelocityX = Mathf.Abs(distanceToPlayer) <= stopDistance ? 0f : controller.transform.right.x * speed;
         }
     }
 }

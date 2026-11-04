@@ -27,7 +27,7 @@ namespace UI
 
         public static void UpdateHealthFill(float fillAmount)
         {
-            _instance.healthFill.fillAmount = Mathf.Clamp01(fillAmount);
+            _instance.healthFill.fillAmount = fillAmount;
         }
 
         void UpdateScoreDisplay()

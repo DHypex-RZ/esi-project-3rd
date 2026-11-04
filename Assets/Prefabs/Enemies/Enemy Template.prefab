@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2913862540533041585}
   - component: {fileID: 5849460354220472387}
   m_Layer: 6
-  m_Name: Basic Enemy
+  m_Name: Enemy Template
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.7169812, g: 0.1724813, b: 0.1724813, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -124,7 +124,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -179,26 +179,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b10b7fad364b5a93c71d3421e5866a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.EnemyController
-  score: 10
   attack:
     enabled: 1
     damage: 10
-    cooldown: 1
-  collisions:
-    enabled: 1
-    enemyLayer:
-      serializedVersion: 2
-      m_Bits: 64
+    cooldown: 1.75
+    attackRange: 1.5
   movement:
     enabled: 1
     speed: 5
-    stopDistance: 1.85
-    enemySpacing: 2
-  push:
-    enabled: 1
-    pushForce: 8
-    pushDuration: 0.25
-    enemySpacing: 2
+    stopDistance: 2
+    safeDistance: 1.93
+    layer:
+      serializedVersion: 2
+      m_Bits: 64
   slide:
-    enabled: 1
-    slideDuration: 0.35
+    enabled: 0
+    duration: 0

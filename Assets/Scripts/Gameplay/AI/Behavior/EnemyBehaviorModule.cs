@@ -6,19 +6,22 @@ namespace Gameplay.AI.Behavior
     [Serializable]
     public abstract class EnemyBehaviorModule
     {
-        [SerializeField] protected bool enabled = true;
+        [SerializeField] protected internal bool enabled = true;
         
         protected EnemyController controller;
 
-        internal void Initialize(EnemyController controller)
+        internal void Awake(EnemyController controller)
         {
             this.controller = controller;
-            if (enabled) OnInitialize();
+            Awake();
         }
 
-        protected virtual void OnInitialize() { }
-        internal virtual bool OnFixedUpdate() => false;
-        internal virtual bool OnEnemyDamaged() => false;
-        internal virtual void OnTriggerEnter2D(Collider2D other) { }
+        protected void Awake() { }
+
+        protected internal virtual void Update() { }
+
+        protected internal virtual void FixedUpdate() { }
+
+        protected void OnTriggerEnter2D(Collider2D other) { }
     }
 }

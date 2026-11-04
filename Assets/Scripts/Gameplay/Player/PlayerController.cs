@@ -6,6 +6,9 @@ namespace Gameplay.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public static PlayerController player { get; private set; }
+        public static Vector2 playerPosition => player.transform.position;
+
         [Header("Attack areas")]
         [SerializeField] GameObject attackAreaLeft;
         [SerializeField] GameObject attackAreaRight;
@@ -20,6 +23,8 @@ namespace Gameplay.Player
 
         void Awake()
         {
+            player = this;
+            
             SetAttackAreaActive(false, false);
             SetAttackAreaActive(true, false);
             maxHealth = Mathf.Max(1, maxHealth);
@@ -33,15 +38,15 @@ namespace Gameplay.Player
 
         public void TakeDamage(int damage)
         {
-            if (damage <= 0 || _currentHealth <= 0) return;
+            /*if (damage <= 0 || _currentHealth <= 0) return;
 
             _currentHealth = Mathf.Max(0, _currentHealth - damage);
-            UpdateHealthDisplay();
+            UpdateHealthDisplay();*/
         }
 
         void UpdateHealthDisplay()
         {
-            PlayableInterfaceController.UpdateHealthFill((float)_currentHealth / maxHealth);
+            PlayableInterfaceController.UpdateHealthFill(_currentHealth / maxHealth);
         }
 
         public void Attack(bool right)
