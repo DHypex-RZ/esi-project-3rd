@@ -1,4 +1,5 @@
 using System.Collections;
+using UI;
 using UnityEngine;
 
 namespace Gameplay.Player
@@ -10,13 +11,37 @@ namespace Gameplay.Player
         [SerializeField] GameObject attackAreaRight;
         [SerializeField, Min(0.01f)] float attackDuration;
 
+        [Header("Health")]
+        [SerializeField, Min(1)] int maxHealth = 100;
+
         Coroutine _attackRoutineLeft;
         Coroutine _attackRoutineRight;
+        int _currentHealth;
 
         void Awake()
         {
             SetAttackAreaActive(false, false);
             SetAttackAreaActive(true, false);
+            maxHealth = Mathf.Max(1, maxHealth);
+            _currentHealth = maxHealth;
+        }
+
+        void Start()
+        {
+            UpdateHealthDisplay();
+        }
+
+        public void TakeDamage(int damage)
+        {
+            if (damage <= 0 || _currentHealth <= 0) return;
+
+            _currentHealth = Mathf.Max(0, _currentHealth - damage);
+            UpdateHealthDisplay();
+        }
+
+        void UpdateHealthDisplay()
+        {
+            PlayableInterfaceController.UpdateHealthFill((float)_currentHealth / maxHealth);
         }
 
         public void Attack(bool right)

@@ -10,10 +10,11 @@ namespace UI
         
         [SerializeField] PlayerController player;
         [SerializeField] Text scoreText;
+        [SerializeField] Image healthFill;
 
         int _score;
 
-        void Start()
+        void Awake()
         {
             _instance = this;
         }
@@ -22,6 +23,11 @@ namespace UI
         {
             _instance._score += amount;
             _instance.UpdateScoreDisplay();
+        }
+
+        public static void UpdateHealthFill(float fillAmount)
+        {
+            _instance.healthFill.fillAmount = Mathf.Clamp01(fillAmount);
         }
 
         void UpdateScoreDisplay()

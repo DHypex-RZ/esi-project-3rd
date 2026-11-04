@@ -6,39 +6,11 @@ namespace Gameplay.AI
 {
     public class EnemyGeneratorController : MonoBehaviour
     {
-        [Header("Player")]
-        [SerializeField] Transform player;
-        
         [Header("Spawn settings")]
         [SerializeField] Transform spawnPointLeft;
         [SerializeField] Transform spawnPointRight;
         [SerializeField] Transform enemyContainer;
         [SerializeField, Min(0.01f)] float spawnClearanceRadius = 1.25f;
-        
-        [Header("Global enemy settings")]
-        [SerializeField, Min(0.1f)] float speed;
-        [SerializeField, Min(0f)] float stopDistance;
-        [SerializeField, Min(0f)] float queueSpacing;
-        [SerializeField] LayerMask layer;
-
-        public static Vector3 playerPosition { get; private set; }
-        public static float enemySpeed { get; private set; }
-        public static float enemyStopDistance { get; private set; }
-        public static float enemySpacing { get; private set; }
-        public static LayerMask enemyLayer { get; private set; }
-
-        void Awake()
-        {
-            enemySpeed = speed;
-            enemyStopDistance = stopDistance;
-            enemySpacing = queueSpacing;
-            enemyLayer = layer;
-        }
-
-        void Start()
-        {
-            playerPosition = player.position;
-        }
 
         public bool TrySpawnAnEnemy(GameObject enemyToGenerate)
         {
@@ -52,7 +24,12 @@ namespace Gameplay.AI
 
         bool TrySpawnAt(GameObject enemyToGenerate, Transform spawnPoint)
         {
-            if (Physics2D.OverlapCircle(spawnPoint.position, spawnClearanceRadius, enemyLayer)) return false;
+            Collider2D[] overlappingColliders =
+                Physics2D.OverlapCircleAll(spawnPoint.position, spawnClearanceRadius);
+            foreach (Collider2D overlappingCollider in overlappingColliders)
+            {
+                if (overlappingCollider.GetComponentInParent<EnemyController>() != null) return false;
+            }
 
             Instantiate(enemyToGenerate, spawnPoint.position, Quaternion.identity, enemyContainer);
             return true;

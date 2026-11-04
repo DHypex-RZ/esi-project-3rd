@@ -1,118 +1,106 @@
+using Gameplay.AI.Behavior;
+using Gameplay.AI.Behavior.Modules;
+using Gameplay.Player;
+using UI;
 using UnityEngine;
-using static Gameplay.AI.EnemyGeneratorController;
 
 namespace Gameplay.AI
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public abstract class EnemyController : MonoBehaviour
+    public class EnemyController : MonoBehaviour
     {
-        const int _HIT_CAPACITY = 20;
-
-        [Header("Score")]
+        internal static PlayerController player;
+        internal static Vector2 playerPosition => player.transform.position;
+        
         [SerializeField, Min(0)] protected int score;
 
-        protected Rigidbody2D rb;
-        float _pushRemaining;
-        RaycastHit2D[] _pushHits = new RaycastHit2D[_HIT_CAPACITY];
+        [Header("Behaviors")]
+        [SerializeField] internal EnemyAttackBehavior attack = new();
+        [SerializeField] internal EnemyCollisionBehavior collisions = new();
+        [SerializeField] internal EnemyMovementBehavior movement = new();
+        [SerializeField] internal EnemyPushBehavior push = new();
+        [SerializeField] internal EnemySlideBehavior slide = new();
 
-        void Awake() => rb = GetComponent<Rigidbody2D>();
+        internal Rigidbody2D rb;
+        
+        EnemyBehaviorModule[] _behaviorModules;
+        
+        
+        internal void BeginPushSequence() => push.BeginSequence();
+        internal void Push(EnemyController firstEnemy, Vector2 direction) =>
+            push.Push(firstEnemy, direction);
+        internal void ApplyPush(Vector2 direction, float force, float duration) =>
+            push.Apply(direction, force, duration);
+
+        void Awake()
+        {
+            rb = GetComponent<Rigidbody2D>();
+            player = FindFirstObjectByType<PlayerController>();
+            _behaviorModules = new EnemyBehaviorModule[] { attack, collisions, movement, push, slide};
+            
+            foreach (EnemyBehaviorModule module in _behaviorModules) module.Initialize(this);
+        }
 
         protected virtual void FixedUpdate()
         {
-            if (IsBeingPushed()) return;
-
-            MoveTowardsPlayer();
+            bool moduleControlsMovement = TickModules();
+            movement.Tick(push.Tick() || moduleControlsMovement);
         }
 
-        bool IsBeingPushed()
+        public void Push(Vector2 direction)
         {
-            if (_pushRemaining <= 0f) return false;
-
-            _pushRemaining = Mathf.Max(0f, _pushRemaining - Time.fixedDeltaTime);
-            return _pushRemaining > 0f;
+            push.Push(direction);
         }
 
-        void MoveTowardsPlayer()
+        internal EnemyController FindEnemyInDirection(Vector2 direction, float distance)
         {
-            float distanceToPlayer = playerPosition.x - rb.position.x;
-            float directionToPlayer = Mathf.Sign(distanceToPlayer);
+            return collisions.TryFindNearestEnemy(direction, distance, out EnemyController enemy, out _) ? enemy : null;
+        }
 
-            if (Mathf.Abs(distanceToPlayer) <= enemyStopDistance || PathIsBlocked(directionToPlayer))
+        internal EnemyController MoveSafely(Vector2 targetPosition)
+        {
+            return movement.MoveSafely(targetPosition);
+        }
+
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("PlayerAttack") && !HandleDamage())
             {
-                rb.linearVelocityX = 0f;
+                PlayableInterfaceController.AddScore(score);
+                Destroy(gameObject);
                 return;
             }
 
-            rb.linearVelocityX = directionToPlayer * enemySpeed;
+            NotifyModulesOfTrigger(other);
         }
 
-        public void Push(Vector2 direction, float force, float duration)
+        bool HandleDamage()
         {
-            if (direction.sqrMagnitude <= Mathf.Epsilon || force <= 0f || duration <= 0f) return;
-
-            Vector2 pushDirection = direction.normalized;
-            ApplyPush(pushDirection, force, duration);
-
-            EnemyController enemyAhead = FindEnemyInDirection(pushDirection);
-            while (enemyAhead != null)
+            foreach (EnemyBehaviorModule module in _behaviorModules)
             {
-                enemyAhead.ApplyPush(pushDirection, force, duration);
-                enemyAhead = enemyAhead.FindEnemyInDirection(pushDirection);
-            }
-        }
-
-        void ApplyPush(Vector2 direction, float force, float duration)
-        {
-            _pushRemaining = duration;
-            rb.AddForce(direction * force, ForceMode2D.Impulse);
-        }
-
-        EnemyController FindEnemyInDirection(Vector2 direction)
-        {
-            if (enemySpacing <= 0f) return null;
-
-            int hitCount = GetPushHits(direction);
-            EnemyController nearestEnemy = null;
-            float nearestDistance = float.MaxValue;
-
-            for (int i = 0; i < hitCount; i++)
-            {
-                RaycastHit2D hit = _pushHits[i];
-                if (hit.distance >= nearestDistance) continue;
-
-                EnemyController enemy = hit.collider.GetComponentInParent<EnemyController>();
-                if (enemy == null || enemy == this ||
-                    Vector2.Dot(enemy.rb.position - rb.position, direction) <= 0f) continue;
-
-                nearestEnemy = enemy;
-                nearestDistance = hit.distance;
+                if (module.OnEnemyDamaged()) return true;
             }
 
-            return nearestEnemy;
+            return false;
         }
 
-        int GetPushHits(Vector2 direction)
+        bool TickModules()
         {
-            do
+            bool movementIsOverridden = false;
+            foreach (EnemyBehaviorModule module in _behaviorModules)
             {
-                int hitCount = Physics2D.RaycastNonAlloc(rb.position, direction, _pushHits, enemySpacing, enemyLayer);
+                movementIsOverridden |= module.OnFixedUpdate();
+            }
 
-                if (hitCount < _pushHits.Length) return hitCount;
-
-                System.Array.Resize(ref _pushHits, _pushHits.Length * 2);
-            } while (true);
+            return movementIsOverridden;
         }
 
-        bool PathIsBlocked(float directionToPlayer)
+        void NotifyModulesOfTrigger(Collider2D other)
         {
-            if (directionToPlayer == 0f || enemySpacing <= 0f) return false;
-
-            RaycastHit2D hit = Physics2D.Raycast(rb.position, Vector2.right * directionToPlayer, enemySpacing, enemyLayer);
-            return hit && hit.distance < enemySpacing;
+            foreach (EnemyBehaviorModule module in _behaviorModules)
+            {
+                module.OnTriggerEnter2D(other);
+            }
         }
-
-        protected virtual void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("PlayerAttack")) TakeDamage(); }
-
-        protected abstract void TakeDamage();
     }
 }

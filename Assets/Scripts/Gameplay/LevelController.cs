@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Gameplay.AI;
 using UnityEngine;
@@ -71,7 +70,6 @@ namespace Gameplay
             for (int i = 0; i < _remaining.Length; i++)
             {
                 if (pick < _remaining[i]) return i;
-
                 pick -= _remaining[i];
             }
 

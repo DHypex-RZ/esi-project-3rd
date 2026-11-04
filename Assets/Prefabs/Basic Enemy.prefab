@@ -176,10 +176,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 5442205983371582016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8003036c088a1f849b62eaa92b23575b, type: 3}
+  m_Script: {fileID: 11500000, guid: d9b10b7fad364b5a93c71d3421e5866a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.AI.EnemyType.BasicEnemy
+  m_EditorClassIdentifier: Project.Core::Gameplay.AI.EnemyController
   score: 10
-  moveSpeed: 5
-  stopDistance: 1.5
-  queueSpacing: 1
+  attack:
+    enabled: 1
+    damage: 10
+    cooldown: 1
+  collisions:
+    enabled: 1
+    enemyLayer:
+      serializedVersion: 2
+      m_Bits: 64
+  movement:
+    enabled: 1
+    speed: 5
+    stopDistance: 1.85
+    enemySpacing: 2
+  push:
+    enabled: 1
+    pushForce: 8
+    pushDuration: 0.25
+    enemySpacing: 2
+  slide:
+    enabled: 1
+    slideDuration: 0.35
