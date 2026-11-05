@@ -16,7 +16,7 @@ namespace Gameplay.AI.Behavior
             Awake();
         }
 
-        protected void Awake() { }
+        protected internal virtual void Awake() { }
 
         protected internal virtual void Update() { }
 

@@ -30,12 +30,12 @@ namespace Gameplay.AI.Behavior.Modules
         {
             if (_hasSlid) return;
 
+            controller.movement.enabled = false;
             _hasSlid = true;
             isSliding = true;
             _elapsedSlideTime = 0f;
             controller.rb.linearVelocityX = 0f;
-            controller.rb.transform.rotation = Quaternion.Euler(0, controller.rb.transform.rotation.y + 180, 0) ;
-
+            controller.rb.transform.rotation = Quaternion.Euler(0, controller.rb.transform.rotation.y == 0 ? 180 : 0, 0) ;
             _slideStart = controller.rb.position;
             _slideTarget = new Vector2(2f * playerPosition.x - _slideStart.x, _slideStart.y);
         }
@@ -51,7 +51,10 @@ namespace Gameplay.AI.Behavior.Modules
             position.x = Mathf.Lerp(_slideStart.x, _slideTarget.x, easedProgress);
             controller.rb.MovePosition(position);
 
-            if (progress >= 1f) enabled = isSliding = false;
+            if (!(progress >= 1f)) return;
+            
+            enabled = isSliding = false;
+            controller.movement.enabled = true;
         }
     }
 }

@@ -1120,7 +1120,7 @@ GameObject:
   - component: {fileID: 997205674}
   - component: {fileID: 997205676}
   - component: {fileID: 997205675}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attack Area R
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
@@ -1358,7 +1358,7 @@ MonoBehaviour:
   enemyGenerator: {fileID: 25539147}
   enemies:
   - enemy: {fileID: 3926144613682825698, guid: eb04164c614fd6f44a33a68682c8c880, type: 3}
-    count: 1
+    count: 11
   minSpawnInterval: 0.65
   maxSpawnInterval: 1.25
   spawnRetryInterval: 0.5
@@ -1846,7 +1846,7 @@ GameObject:
   - component: {fileID: 2082263579}
   - component: {fileID: 2082263581}
   - component: {fileID: 2082263580}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attack Area L
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}

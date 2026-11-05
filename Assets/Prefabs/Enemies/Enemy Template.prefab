@@ -188,10 +188,11 @@ MonoBehaviour:
     enabled: 1
     speed: 5
     stopDistance: 2
-    safeDistance: 1.93
+    rayLength: 2.85
     layer:
       serializedVersion: 2
       m_Bits: 64
+    distanceToStop: 0
   slide:
     enabled: 0
     duration: 0

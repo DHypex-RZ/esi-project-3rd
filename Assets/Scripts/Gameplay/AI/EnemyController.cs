@@ -36,11 +36,13 @@ namespace Gameplay.AI
 
             if (!hit) return;
             
-            if (!slide.enabled) Destroy(gameObject);
-            if (slide.enabled) hit = false;
+            if (hit & slide.enabled)
+            {
+                hit = false;
+                return;
+            }
             
-            if(slide.isSliding) movement.enabled = false;
-
+            Destroy(gameObject);
         }
 
         void FixedUpdate()
