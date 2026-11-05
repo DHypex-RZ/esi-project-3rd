@@ -31,7 +31,7 @@ namespace Gameplay.AI
                 if (overlappingCollider.GetComponentInParent<EnemyController>() != null) return false;
             }
             
-            Instantiate(enemyToGenerate, spawnPoint.position, Quaternion.Euler(0,spawnPoint == spawnPointLeft ? 0 : 180,0), enemyContainer);
+            Instantiate(enemyToGenerate, spawnPoint.position, Quaternion.identity, enemyContainer);
             return true;
         }
     }
