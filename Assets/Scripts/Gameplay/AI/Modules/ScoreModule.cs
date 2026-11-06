@@ -8,7 +8,7 @@ namespace Gameplay.AI.Modules
         static int _totalScore;
         
         [SerializeField, Min(0)] internal int hitPoints;
-        [SerializeField] int score;
+        [SerializeField, Min(0)] int score;
         
         internal bool live => hitPoints > 0;
         

@@ -129,8 +129,9 @@ GameObject:
   m_Component:
   - component: {fileID: 25539148}
   - component: {fileID: 25539147}
+  - component: {fileID: 25539149}
   m_Layer: 0
-  m_Name: Enemy Manager
+  m_Name: Level Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,10 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7b68545fc565e43acd83f249897493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.AI.EnemyController
-  spawnPointLeft: {fileID: 277937894}
-  spawnPointRight: {fileID: 217666217}
-  enemyContainer: {fileID: 851594360}
-  spawnClearanceRadius: 1.25
 --- !u!4 &25539148
 Transform:
   m_ObjectHideFlags: 0
@@ -170,6 +167,28 @@ Transform:
   - {fileID: 851594360}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &25539149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25539146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc6a679ac4747f7a9b7fa258b7940bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.LevelController
+  leftSpawn: {fileID: 277937894}
+  rightSpawn: {fileID: 217666217}
+  container: {fileID: 851594360}
+  enemiesList:
+  - enemy: {fileID: 7268592339720513454, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+    count: 2
+  - enemy: {fileID: 3078319599855584264, guid: d8ebb5e690f9eeb42985dfa89445549b, type: 3}
+    count: 2
+  minInterval: 0.5
+  maxInterval: 1.25
 --- !u!1 &217666216
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 277937894}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spawn L
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -576,8 +595,8 @@ Transform:
   m_GameObject: {fileID: 609156969}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5, z: 0}
-  m_LocalScale: {x: 35, y: 8, z: 1}
+  m_LocalPosition: {x: 0, y: -4, z: 0}
+  m_LocalScale: {x: 100, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -961,7 +980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 851594360}
   m_Layer: 0
-  m_Name: Enemy Container
+  m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1199,59 +1218,6 @@ RectTransform:
   m_AnchoredPosition: {x: 350, y: -107}
   m_SizeDelta: {x: 399.94, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1461791491
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1461791493}
-  - component: {fileID: 1461791492}
-  m_Layer: 0
-  m_Name: Level Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1461791492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461791491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cc6a679ac4747f7a9b7fa258b7940bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.LevelController
-  enemyGenerator: {fileID: 25539147}
-  enemies:
-  - enemy: {fileID: 7268592339720513454, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
-    count: 13
-  - enemy: {fileID: 3078319599855584264, guid: d8ebb5e690f9eeb42985dfa89445549b, type: 3}
-    count: 7
-  minSpawnInterval: 0.5
-  maxSpawnInterval: 0.95
-  spawnRetryInterval: 2
---- !u!4 &1461791493
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461791491}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1671.626, y: 697.25726, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1610200730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,5 +1870,4 @@ SceneRoots:
   - {fileID: 745024424}
   - {fileID: 633195606}
   - {fileID: 25539148}
-  - {fileID: 1461791493}
   - {fileID: 609156972}

@@ -1,3 +1,4 @@
+using System;
 using Gameplay.AI.Modules;
 using UnityEngine;
 
@@ -22,5 +23,11 @@ namespace Gameplay.AI
         }
         
         internal void EnableModules(bool on = true) => movement.enabled = attack.enabled = score.enabled = on;
+        
+        [Serializable] public class Group
+        {
+            [SerializeField] internal GameObject enemy;
+            [SerializeField, Min(1)] internal int count;
+        }
     }
 }

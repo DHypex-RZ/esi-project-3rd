@@ -1,79 +1,49 @@
-using System.Collections;
-using Gameplay.AI;
+using System.Collections.Generic;
 using UnityEngine;
+using static Gameplay.AI.EnemyController;
 using Random = UnityEngine.Random;
 
 namespace Gameplay
 {
     public class LevelController : MonoBehaviour
     {
-        [Header("Enemies")]
-        [SerializeField] EnemyGeneratorController enemyGenerator;
-        [SerializeField] EnemySpawn[] enemies;
+        [SerializeField] Transform leftSpawn;
+        [SerializeField] Transform rightSpawn;
+        [SerializeField] Transform container;
+        [SerializeField] List<Group> enemiesList;
+        [SerializeField, Min(0.1f)] float minInterval;
+        [SerializeField, Min(0.1f)] float maxInterval;
 
-        [Header("Spawn timing")]
-        [SerializeField, Min(0.1f)] float minSpawnInterval;
-        [SerializeField, Min(0.1f)] float maxSpawnInterval;
-        [SerializeField, Min(0.1f)] float spawnRetryInterval;
-
-        int[] _remaining;
-        int _totalRemaining;
+        int _remaining;
 
         void Start()
         {
-            InitializeEnemyCounts();
-            StartCoroutine(SpawnLoop());
+            foreach (Group enemies in enemiesList) _remaining += enemies.count;
+            
+            GenerateAnEnemy();
         }
 
-        void InitializeEnemyCounts()
+        async void GenerateAnEnemy()
         {
-            _remaining = new int[enemies.Length];
-            for (int i = 0; i < enemies.Length; i++)
+            while (_remaining > 0)
             {
-                _remaining[i] = enemies[i].count;
-                _totalRemaining += enemies[i].count;
-            }
-        }
-
-        IEnumerator SpawnLoop()
-        {
-            while (_totalRemaining > 0)
-            {
-                int enemyIndex = SelectRandomEnemyIndex();
-                while (!enemyGenerator.TrySpawnAnEnemy(enemies[enemyIndex].enemy))
+                int index = Random.Range(0, enemiesList.Count);
+                
+                if (enemiesList[index].count <= 0)
                 {
-                    yield return new WaitForSeconds(spawnRetryInterval);
+                    enemiesList.RemoveAt(index);
+                    continue;
                 }
-
-                ConsumeEnemy(enemyIndex);
-
-                if (_totalRemaining == 0) yield break;
-                yield return new WaitForSeconds(GetRandomSpawnInterval());
+                
+                enemiesList[index].count--;
+                _remaining--;
+                Instantiate(enemiesList[index].enemy, GetSpawnPoint(), Quaternion.identity, container);
+                await Awaitable.WaitForSecondsAsync(Random.Range(minInterval, maxInterval));
             }
+            
+            enemiesList.Clear();
         }
-
-        void ConsumeEnemy(int enemyIndex)
-        {
-            _remaining[enemyIndex]--;
-            _totalRemaining--;
-        }
-
-        float GetRandomSpawnInterval()
-        {
-            return Random.Range(minSpawnInterval, Mathf.Max(minSpawnInterval, maxSpawnInterval));
-        }
-
-        int SelectRandomEnemyIndex()
-        {
-            int pick = Random.Range(0, _totalRemaining);
-
-            for (int i = 0; i < _remaining.Length; i++)
-            {
-                if (pick < _remaining[i]) return i;
-                pick -= _remaining[i];
-            }
-
-            return -1;
-        }
-    }
+        
+        Vector2 GetSpawnPoint() => Random.Range(0, 2) == 0 ? leftSpawn.position : rightSpawn.position;
+    } 
 }
