@@ -12,14 +12,8 @@ namespace UI
         
         void Awake() => canvas = this;
 
-        internal void UpdateScore(int score)
-        {
-            scoreText.text = score.ToString();
-        }
+        internal void UpdateScore(int score) => scoreText.text = score.ToString();
         
-        internal void UpdateHealth(int health, int currentHealth)
-        {
-            healthSprite.fillAmount = (float)currentHealth / health;
-        }
+        internal void UpdateHealth(float health, float currentHealth) => healthSprite.fillAmount = currentHealth / health;
     }
 }

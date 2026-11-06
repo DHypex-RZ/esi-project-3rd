@@ -34,11 +34,4 @@ namespace Gameplay.AI
             return true;
         }
     }
-
-    [Serializable]
-    public struct EnemySpawn
-    {
-        public GameObject enemy;
-        [Min(0)] public int count;
-    }
 }

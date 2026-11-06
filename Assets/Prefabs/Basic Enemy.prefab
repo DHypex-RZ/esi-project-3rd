@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 7268592339720513454}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.48, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -195,11 +195,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02678a19c15c4e5babcb2b5dc6ee3935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.MovementModule
-  speed: 5
+  speed: 7.25
   stop: 1.75
   layer:
     serializedVersion: 2
     m_Bits: 64
+  inFrontOfPlayer: 0
 --- !u!114 &477377330494874687
 MonoBehaviour:
   m_ObjectHideFlags: 0

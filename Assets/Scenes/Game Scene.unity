@@ -1234,8 +1234,8 @@ MonoBehaviour:
     count: 13
   - enemy: {fileID: 3078319599855584264, guid: d8ebb5e690f9eeb42985dfa89445549b, type: 3}
     count: 7
-  minSpawnInterval: 0.82
-  maxSpawnInterval: 1.38
+  minSpawnInterval: 0.5
+  maxSpawnInterval: 0.95
   spawnRetryInterval: 2
 --- !u!4 &1461791493
 Transform:
@@ -1856,19 +1856,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2101660175}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1840142015}
-        m_TargetAssemblyTypeName: UI.PlayableInterfaceController, Core.UI
-        m_MethodName: PauseMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2101660175
 MonoBehaviour:
   m_ObjectHideFlags: 0

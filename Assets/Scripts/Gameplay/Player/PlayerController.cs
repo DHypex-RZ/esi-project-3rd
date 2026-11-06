@@ -7,11 +7,12 @@ namespace Gameplay.Player
     {
         public static PlayerController player { get; private set; }
         
-        [SerializeField, Min(0)] int health;
+        [SerializeField, Min(0)] float health;
         
-        int _currentHealth;
+        float _currentHealth;
 
-        void Awake() {
+        void Awake()
+        {
             player = this;
             _currentHealth = health;
         }
@@ -23,7 +24,7 @@ namespace Gameplay.Player
             area.SetActive(false);
         }
 
-        internal void TakeDamage(int damage)
+        public void TakeDamage(int damage)
         {
             _currentHealth -= damage;
             if (_currentHealth <= 0) _currentHealth = 0;

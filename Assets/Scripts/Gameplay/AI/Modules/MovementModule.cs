@@ -10,21 +10,11 @@ namespace Gameplay.AI.Modules
         [SerializeField] LayerMask layer;
         
         internal float gap = .5f;
-        [SerializeField] internal bool inFrontOfPlayer;
+        internal bool inFrontOfPlayer;
         
-        SpriteRenderer _sprite;
         Vector2 _target;
         
-        protected override void Awake()
-        {
-            base.Awake();
-            _sprite = GetComponent<SpriteRenderer>();
-        }
-        
-        void Start()
-        {
-            if (transform.position.x < player.transform.position.x) InvertValues();
-        }
+        void Start() { if (transform.position.x < player.transform.position.x) InvertValues(); }
         
         void FixedUpdate()
         {
@@ -48,7 +38,7 @@ namespace Gameplay.AI.Modules
         
         internal void InvertValues()
         {
-            _sprite.flipX = !_sprite.flipX;
+            controller.sprite.flipX = !controller.sprite.flipX;
             stop = -stop;
             gap = -gap;
         }

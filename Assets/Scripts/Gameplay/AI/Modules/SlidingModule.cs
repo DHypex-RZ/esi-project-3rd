@@ -1,7 +1,6 @@
 using UnityEngine;
 using static Gameplay.Player.PlayerController;
 
-
 namespace Gameplay.AI.Modules
 {
     public class SlidingModule: ModuleController
@@ -12,15 +11,9 @@ namespace Gameplay.AI.Modules
         Vector2 _target;
         bool _sliding;
 
-        void Update()
-        {
-            if (_sliding) Slide();
-        }
+        void Update() { if (_sliding) Slide(); }
 
-        void Slide()
-        {
-            transform.position = Vector2.MoveTowards(transform.position, _target, speed * Time.deltaTime);
-        }
+        void Slide() { transform.position = Vector2.MoveTowards(transform.position, _target, speed * Time.deltaTime); }
 
         async void SetDestination()
         {
@@ -33,9 +26,6 @@ namespace Gameplay.AI.Modules
             controller.EnableModules();
         }
         
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("PlayerAttack") && controller.score.live) SetDestination();
-        }
+        void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("PlayerAttack") && controller.score.live) SetDestination(); }
     }
 }

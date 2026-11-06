@@ -23,9 +23,6 @@ namespace Gameplay.AI.Modules
             Destroy(gameObject);
         }
         
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("PlayerAttack")) BeingAttacked();
-        }
+        void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("PlayerAttack")) BeingAttacked(); }
     }
 }
