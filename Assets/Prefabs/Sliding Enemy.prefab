@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 477377330494874687, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: damage
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: lives
       value: 2
@@ -16,9 +20,13 @@ PrefabInstance:
       propertyPath: score
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: hitPoints
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7268592339720513454, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: m_Name
-      value: Basic Enemy Variant
+      value: Sliding Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 8287255070977482893, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: m_Color.b

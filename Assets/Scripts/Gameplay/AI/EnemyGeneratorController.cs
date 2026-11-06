@@ -24,8 +24,7 @@ namespace Gameplay.AI
 
         bool TrySpawnAt(GameObject enemyToGenerate, Transform spawnPoint)
         {
-            Collider2D[] overlappingColliders =
-                Physics2D.OverlapCircleAll(spawnPoint.position, spawnClearanceRadius);
+            Collider2D[] overlappingColliders = Physics2D.OverlapCircleAll(spawnPoint.position, spawnClearanceRadius);
             foreach (Collider2D overlappingCollider in overlappingColliders)
             {
                 if (overlappingCollider.GetComponentInParent<EnemyController>() != null) return false;

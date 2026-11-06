@@ -8,12 +8,18 @@ namespace UI
         public static InterfaceController canvas { get; private set; }
         
         [SerializeField] Text scoreText;
+        [SerializeField] Image healthSprite;
         
         void Awake() => canvas = this;
 
         internal void UpdateScore(int score)
         {
             scoreText.text = score.ToString();
+        }
+        
+        internal void UpdateHealth(int health, int currentHealth)
+        {
+            healthSprite.fillAmount = (float)currentHealth / health;
         }
     }
 }

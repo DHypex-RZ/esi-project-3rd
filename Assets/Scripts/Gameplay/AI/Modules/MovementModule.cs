@@ -3,28 +3,54 @@ using static Gameplay.Player.PlayerController;
 
 namespace Gameplay.AI.Modules
 {
-    [RequireComponent(typeof(EnemyController))]
     public class MovementModule: ModuleController
     {
-        [SerializeField] internal float speed;
-        [SerializeField] internal float stopDistance;
+        [SerializeField, Min(0)] internal float speed;
+        [SerializeField, Min(0)] internal float stop;
         [SerializeField] LayerMask layer;
+        
+        internal float gap = .5f;
+        [SerializeField] internal bool inFrontOfPlayer;
+        
+        SpriteRenderer _sprite;
+        Vector2 _target;
+        
+        protected override void Awake()
+        {
+            base.Awake();
+            _sprite = GetComponent<SpriteRenderer>();
+        }
         
         void Start()
         {
-            if (transform.position.x < player.position.x) stopDistance = -stopDistance;
+            if (transform.position.x < player.transform.position.x) InvertValues();
         }
         
         void FixedUpdate()
         {
-            Vector2 target;
-            
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, player.position - transform.position, layer);
-            
-            if (hit.collider) target = hit.point + new Vector2(stopDistance, 0); 
-            else target = player.position + new Vector3(stopDistance, 0);
-            
-            controller.transform.position = Vector2.MoveTowards(controller.transform.position, target, speed * Time.fixedDeltaTime);
+           if (FindForward(out RaycastHit2D other)) _target = other.point + new Vector2(stop, 0); 
+           else _target = player.transform.position + new Vector3(stop, 0);
+
+           MoveTowardsTarget();
+        }
+
+        void MoveTowardsTarget()
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _target, speed * Time.fixedDeltaTime);
+            inFrontOfPlayer = Mathf.Approximately(Vector2.Distance(transform.position, player.transform.position), Mathf.Abs(stop + gap));
+        }
+
+        bool FindForward(out RaycastHit2D hit)
+        {
+            hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, layer);
+            return hit.collider;
+        }
+        
+        internal void InvertValues()
+        {
+            _sprite.flipX = !_sprite.flipX;
+            stop = -stop;
+            gap = -gap;
         }
     }
 }

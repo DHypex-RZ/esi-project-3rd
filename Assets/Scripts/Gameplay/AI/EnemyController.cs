@@ -17,5 +17,7 @@ namespace Gameplay.AI
             attack = GetComponent<AttackModule>();
             score = GetComponent<ScoreModule>();
         }
+        
+        internal void EnableModules(bool on = true) => movement.enabled = attack.enabled = score.enabled = on;
     }
 }

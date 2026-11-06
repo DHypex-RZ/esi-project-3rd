@@ -7,16 +7,19 @@ namespace Gameplay.AI.Modules
     {
         static int _totalScore;
         
-        [SerializeField, Min(0)] internal int lives;
+        [SerializeField, Min(0)] internal int hitPoints;
         [SerializeField] int score;
+        
+        internal bool live => hitPoints > 0;
         
         void BeingAttacked()
         {
-            lives--;
-
-            if (lives != 0) return;
+            hitPoints--;
+            
+            if (live) return;
             
             _totalScore += score;
+            canvas.UpdateScore(_totalScore);
             Destroy(gameObject);
         }
         
@@ -24,7 +27,5 @@ namespace Gameplay.AI.Modules
         {
             if (other.CompareTag("PlayerAttack")) BeingAttacked();
         }
-
-        void OnDestroy() => canvas.UpdateScore(_totalScore);
     }
 }

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8325765532661376859}
   - component: {fileID: 477377330494874687}
   - component: {fileID: 3757486928446963092}
+  - component: {fileID: 6136933190959304836}
   m_Layer: 6
   m_Name: Basic Enemy
   m_TagString: Enemy
@@ -33,8 +34,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -15.48, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -87,12 +88,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -9022826564029378827, guid: d5769ebde29faf74f89630be0b4ca634, type: 3}
   m_Color: {r: 0.7169812, g: 0.1724813, b: 0.1724813, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.54, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -135,8 +136,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 1.54, y: 2.56}
+    newSize: {x: 1.54, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -195,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.MovementModule
   speed: 5
-  stopDistance: 2
+  stop: 1.75
   layer:
     serializedVersion: 2
     m_Bits: 64
@@ -211,6 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ece37171b34f169c7a774daec848cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.AttackModule
+  damage: 10
+  cooldown: 0.85
 --- !u!114 &3757486928446963092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,5 +226,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8020460cbe1f4874b7119dc6292ba66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.ScoreModule
-  lives: 1
+  hitPoints: 1
   score: 10
+--- !u!95 &6136933190959304836
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7268592339720513454}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6c575964749b3b14dbccac95fa17a7ea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

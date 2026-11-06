@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace Gameplay.AI.Modules
 {
-    [Serializable]
+    [Serializable, RequireComponent(typeof(EnemyController))]
     public abstract class ModuleController: MonoBehaviour
     {
         protected internal EnemyController controller;
+        
 
-        protected void Awake()
-        {
-            controller = GetComponent<EnemyController>();
-        }
+        protected virtual void Awake() => controller = GetComponent<EnemyController>();
     }
 }
