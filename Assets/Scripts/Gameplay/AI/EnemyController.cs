@@ -1,6 +1,7 @@
 using System;
 using Gameplay.AI.Modules;
 using UnityEngine;
+using static Gameplay.Player.PlayerController;
 
 namespace Gameplay.AI
 {
@@ -21,9 +22,11 @@ namespace Gameplay.AI
             sprite = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
         }
-        
+
+        void Update() { if(player.dead) EnableModules(false); }
+
         internal void EnableModules(bool on = true) => movement.enabled = attack.enabled = score.enabled = on;
-        
+
         [Serializable] public class Group
         {
             [SerializeField] internal GameObject enemy;

@@ -7,22 +7,22 @@ namespace Gameplay.AI.Modules
     {
         [SerializeField, Min(0)] int damage;
         [SerializeField, Min(0)] float cooldown;
-        
+
         bool _attacking;
 
-        void Update() { if (controller.movement.inFrontOfPlayer && !_attacking) Attack(); }
-        
+        protected void Update() { if (controller.movement.inFrontOfPlayer && !_attacking) Attack(); }
+
         async void Attack()
         {
             _attacking = true;
             await Awaitable.WaitForSecondsAsync(cooldown);
             
-            if(!controller.score.live) return;
+            if(!controller.score.live || !controller.movement.inFrontOfPlayer) return;
             
             controller.animator.Play("Attacking");
             _attacking = false;
         }
-        
+
         void AttackPlayer() => player.TakeDamage(damage);
     }
 }

@@ -8,6 +8,6 @@ namespace Gameplay.AI.Modules
     {
         protected internal EnemyController controller;
         
-        void Awake() => controller = GetComponent<EnemyController>();
+        protected virtual void Awake() => controller = GetComponent<EnemyController>();
     }
 }

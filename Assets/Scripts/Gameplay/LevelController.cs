@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static Gameplay.AI.EnemyController;
+using static Gameplay.Player.PlayerController;
+using static UI.InterfaceController;
 using Random = UnityEngine.Random;
 
 namespace Gameplay
@@ -15,17 +17,23 @@ namespace Gameplay
         [SerializeField, Min(0.1f)] float maxInterval;
 
         int _remaining;
+        bool _checkConditions;
 
         void Start()
         {
             foreach (Group enemies in enemiesList) _remaining += enemies.count;
-            
             GenerateAnEnemy();
+        }
+
+        void Update()
+        {
+            if (!_checkConditions) return;
+            if(!player.dead && container.childCount == 0) canvas.WinMenu();
         }
 
         async void GenerateAnEnemy()
         {
-            while (_remaining > 0)
+            while (_remaining > 0 && !player.dead)
             {
                 int index = Random.Range(0, enemiesList.Count);
                 
@@ -42,8 +50,9 @@ namespace Gameplay
             }
             
             enemiesList.Clear();
+            _checkConditions = true;
         }
-        
+
         Vector2 GetSpawnPoint() => Random.Range(0, 2) == 0 ? leftSpawn.position : rightSpawn.position;
-    } 
+    }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using static UI.InterfaceController;
 
 namespace Gameplay.Player
@@ -7,8 +8,11 @@ namespace Gameplay.Player
     {
         public static PlayerController player { get; private set; }
         
+        [SerializeField, Min(0)] float attackCooldown;
         [SerializeField, Min(0)] float health;
         
+        internal bool dead => _currentHealth <= 0;
+
         float _currentHealth;
 
         void Awake()
@@ -24,11 +28,19 @@ namespace Gameplay.Player
             area.SetActive(false);
         }
 
+        public async void AttackCooldown(Button button)
+        {
+            button.interactable = false;
+            await Awaitable.WaitForSecondsAsync(attackCooldown);
+            button.interactable = true;
+        }
+
         public void TakeDamage(int damage)
         {
             _currentHealth -= damage;
             if (_currentHealth <= 0) _currentHealth = 0;
             canvas.UpdateHealth(health, _currentHealth);
+            if (dead) canvas.RetryMenu();
         }
     }
 }

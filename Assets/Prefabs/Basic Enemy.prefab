@@ -195,12 +195,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02678a19c15c4e5babcb2b5dc6ee3935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.MovementModule
-  speed: 7.25
+  speed: 12.5
   stop: 1.75
   layer:
     serializedVersion: 2
-    m_Bits: 64
-  inFrontOfPlayer: 0
+    m_Bits: 72
 --- !u!114 &477377330494874687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.AttackModule
   damage: 10
-  cooldown: 0.85
+  cooldown: 0.75
 --- !u!114 &3757486928446963092
 MonoBehaviour:
   m_ObjectHideFlags: 0

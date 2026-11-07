@@ -7,7 +7,7 @@ namespace Gameplay.AI.Modules
     {
         [SerializeField, Min(0)] float speed;
         [SerializeField, Min(0)] float duration;
-        
+
         Vector2 _target;
         bool _sliding;
 
@@ -25,7 +25,7 @@ namespace Gameplay.AI.Modules
             _sliding = false;
             controller.EnableModules();
         }
-        
+
         void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("PlayerAttack") && controller.score.live) SetDestination(); }
     }
 }
