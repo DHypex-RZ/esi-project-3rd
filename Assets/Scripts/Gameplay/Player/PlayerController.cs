@@ -13,16 +13,19 @@ namespace Gameplay.Player
         
         internal bool dead => _currentHealth <= 0;
 
+        Animator _animator;
         float _currentHealth;
 
         void Awake()
         {
             player = this;
+            _animator = GetComponent<Animator>();
             _currentHealth = health;
         }
         
         public async void Attack(GameObject area)
         {
+            _animator.Play("Attacking");
             area.SetActive(true);
             await Awaitable.WaitForSecondsAsync(0.1f);
             area.SetActive(false);

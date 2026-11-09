@@ -3,7 +3,7 @@ using static Gameplay.Player.PlayerController;
 
 namespace Gameplay.AI.Modules
 {
-    public class BackwardsModule: ModuleController
+    public class BackwardsModule: AdvanceModuleController
     {
         [SerializeField, Min(0)] float speed;
         [SerializeField, Min(0)] float duration;
@@ -34,8 +34,9 @@ namespace Gameplay.AI.Modules
             _retreating = false;
             controller.EnableModules();
             gameObject.layer = _mask;
+            done = true;
         }
 
-        void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("PlayerAttack") && controller.score.live) SetDestination(); }
+        void OnTriggerEnter2D(Collider2D other) { if (enabled && other.CompareTag("PlayerAttack") && controller.score.live) SetDestination(); }
     }
 }

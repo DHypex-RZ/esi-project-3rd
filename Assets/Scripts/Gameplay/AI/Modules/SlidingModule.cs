@@ -3,7 +3,7 @@ using static Gameplay.Player.PlayerController;
 
 namespace Gameplay.AI.Modules
 {
-    public class SlidingModule: ModuleController
+    public class SlidingModule: AdvanceModuleController
     {
         [SerializeField, Min(0)] float speed;
         [SerializeField, Min(0)] float duration;
@@ -24,8 +24,9 @@ namespace Gameplay.AI.Modules
             await Awaitable.WaitForSecondsAsync(duration);
             _sliding = false;
             controller.EnableModules();
+            done = true;
         }
 
-        void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("PlayerAttack") && controller.score.live) SetDestination(); }
+        void OnTriggerEnter2D(Collider2D other) { if (enabled && other.CompareTag("PlayerAttack") && controller.score.live) SetDestination(); }
     }
 }
