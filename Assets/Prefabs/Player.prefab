@@ -288,8 +288,10 @@ GameObject:
   - component: {fileID: 2452502027514145044}
   - component: {fileID: 6691900736916585107}
   - component: {fileID: 3619176427775661523}
-  - component: {fileID: 160718096746925175}
   - component: {fileID: 5808364214751017534}
+  - component: {fileID: 160718096746925175}
+  - component: {fileID: 983704417221422555}
+  - component: {fileID: 8243476976079671738}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -437,22 +439,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &160718096746925175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5627739207359178820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c476680b319e79648accfd529670856a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Core.Player::Player.PlayerController
-  attackCooldown: 0.25
-  hitboxLive: 0.1
-  failCooldown: 0.85
-  health: 250
 --- !u!95 &5808364214751017534
 Animator:
   serializedVersion: 7
@@ -475,3 +461,48 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &160718096746925175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5627739207359178820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c476680b319e79648accfd529670856a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Core.Player::Player.PlayerController
+--- !u!114 &983704417221422555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5627739207359178820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf3a3626148471db0c5f8d74bc7d323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Core::Gameplay.Player.Modules.AttackModule
+  cooldown: 0.3
+  duration: 0.1
+  fail: 0.85
+  leftHitbox: {fileID: 3525076622397536177}
+  leftButton: {fileID: 0}
+  rightHitbox: {fileID: 8570218427558307925}
+  rightButton: {fileID: 0}
+--- !u!114 &8243476976079671738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5627739207359178820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9496030b70746baa0d0fa0a7718d50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Core::Gameplay.Player.Modules.HealthModule
+  health: 200
+  frame: {fileID: 0}

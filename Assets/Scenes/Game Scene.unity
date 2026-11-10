@@ -1141,17 +1141,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &633195607 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 160718096746925175, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
-  m_PrefabInstance: {fileID: 4619833434354562994}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c476680b319e79648accfd529670856a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Core.Player::Player.PlayerController
 --- !u!1 &710088385
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,6 +2210,18 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 4619833434354562996}
+          m_TargetAssemblyTypeName: Gameplay.Player.Modules.AttackModule, Project.Core
+          m_MethodName: AttackOnLeft
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 1986588438}
           m_TargetAssemblyTypeName: UnityEngine.SpriteRenderer, UnityEngine
           m_MethodName: set_flipX
@@ -2232,30 +2233,6 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 633195607}
-          m_TargetAssemblyTypeName: Gameplay.Player.PlayerController, Project.Core
-          m_MethodName: Attack
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 2082263578}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 633195607}
-          m_TargetAssemblyTypeName: Gameplay.Player.PlayerController, Project.Core
-          m_MethodName: AttackCooldown
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 1610200732}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &1640470668
 GameObject:
@@ -2395,6 +2372,18 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 4619833434354562996}
+          m_TargetAssemblyTypeName: Gameplay.Player.Modules.AttackModule, Project.Core
+          m_MethodName: AttackOnRight
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 1986588438}
           m_TargetAssemblyTypeName: UnityEngine.SpriteRenderer, UnityEngine
           m_MethodName: set_flipX
@@ -2406,30 +2395,6 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 633195607}
-          m_TargetAssemblyTypeName: Gameplay.Player.PlayerController, Project.Core
-          m_MethodName: Attack
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 997205673}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 633195607}
-          m_TargetAssemblyTypeName: Gameplay.Player.PlayerController, Project.Core
-          m_MethodName: AttackCooldown
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 1640470670}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
           m_CallState: 2
 --- !u!1 &1749996436
 GameObject:
@@ -2704,7 +2669,6 @@ MonoBehaviour:
   winMenu: {fileID: 1165937823}
   scoreText: {fileID: 1392003427}
   multiplierText: {fileID: 1412734268}
-  healthSprite: {fileID: 388278480}
 --- !u!1 &1910846752
 GameObject:
   m_ObjectHideFlags: 0
@@ -3182,6 +3146,18 @@ PrefabInstance:
       propertyPath: rightAttackArea
       value: 
       objectReference: {fileID: 997205673}
+    - target: {fileID: 160718096746925175, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: _event.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 160718096746925175, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: _event.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1610200730}
+    - target: {fileID: 160718096746925175, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: _event.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 314778903184821838, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
       propertyPath: m_Color.a
       value: 0.33333334
@@ -3189,6 +3165,26 @@ PrefabInstance:
     - target: {fileID: 922719794447372009, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
       propertyPath: m_Color.a
       value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 983704417221422555, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: leftButton
+      value: 
+      objectReference: {fileID: 1610200732}
+    - target: {fileID: 983704417221422555, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: rightButton
+      value: 
+      objectReference: {fileID: 1640470670}
+    - target: {fileID: 1259972996330938499, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1511356943484802016, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525076622397536177, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627739207359178820, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
       propertyPath: m_Name
@@ -3234,11 +3230,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8243476976079671738, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: frame
+      value: 
+      objectReference: {fileID: 388278480}
+    - target: {fileID: 8570218427558307925, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+--- !u!114 &4619833434354562996 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 983704417221422555, guid: b5c3d93e76ceaf54387e1618d6370db5, type: 3}
+  m_PrefabInstance: {fileID: 4619833434354562994}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf3a3626148471db0c5f8d74bc7d323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Core::Gameplay.Player.Modules.AttackModule
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
