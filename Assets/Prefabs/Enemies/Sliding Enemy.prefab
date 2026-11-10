@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: damage
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 1772983283759815602, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+    - target: {fileID: 1772983283759815602, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: m_Color.g
+      value: 0.47058824
+      objectReference: {fileID: 0}
     - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: lives
       value: 2
@@ -23,6 +31,18 @@ PrefabInstance:
     - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: hitPoints
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706578199362084766, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706578199362084766, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706578199362084766, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7268592339720513454, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: m_Name
@@ -81,7 +101,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7900813989229608106, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7268592339720513454, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
@@ -105,5 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4835f8f04de74fc88fe60b4b7ffaa4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.SlidingModule
+  done: 0
   speed: 25
   duration: 0.3

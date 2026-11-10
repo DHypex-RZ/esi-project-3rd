@@ -14,6 +14,7 @@ namespace UI
         [SerializeField] GameObject retryMenu;
         [SerializeField] GameObject winMenu;
         [SerializeField] Text scoreText;
+        [SerializeField] Text multiplierText;
         [SerializeField] Image healthSprite;
 
         bool _paused;
@@ -21,6 +22,7 @@ namespace UI
         void Awake() => canvas = this;
 
         internal void UpdateScore(int score) => scoreText.text = score.ToString();
+        internal void UpdateMultiplier(float multiplier) => multiplierText.text = "x " + multiplier;
         internal void UpdateHealth(float health, float currentHealth) => healthSprite.fillAmount = currentHealth / health;
         internal void RetryMenu() => retryMenu.SetActive(true);
         internal void WinMenu() => winMenu.SetActive(true);

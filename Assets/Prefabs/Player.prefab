@@ -450,6 +450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Core.Player::Player.PlayerController
   attackCooldown: 0.25
+  hitboxLive: 0.1
+  failCooldown: 0.85
   health: 250
 --- !u!95 &5808364214751017534
 Animator:

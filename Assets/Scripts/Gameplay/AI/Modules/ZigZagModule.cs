@@ -36,11 +36,10 @@ namespace Gameplay.AI.Modules
                 _second.enabled = true;
                 _first.enabled = false;
             } 
-            else if (!_second.done)
+            else if (_second.done)
             {
                 _first.enabled = true;
                 _second.enabled = false;
-                
             }
         }
 
