@@ -2,6 +2,9 @@
     "name": "Project.Core",
     "rootNamespace": "",
     "references": [
+        "Project.AI",
+        "Project.Player",
+        "Project.UI",
         "UnityEngine.UI"
     ],
     "includePlatforms": [],

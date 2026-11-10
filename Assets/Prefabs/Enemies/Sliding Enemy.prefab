@@ -126,6 +126,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4835f8f04de74fc88fe60b4b7ffaa4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.SlidingModule
-  done: 0
   speed: 25
   duration: 0.3
