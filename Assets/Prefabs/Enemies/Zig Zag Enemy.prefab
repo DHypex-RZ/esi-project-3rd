@@ -12,12 +12,20 @@ PrefabInstance:
       propertyPath: damage
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 3619389231157825261, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: score
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: score
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: hitPoints
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: lifePoints
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7268592339720513454, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
@@ -107,7 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7275652644784ae289c17ef1b851ded2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.AdvanceModule
-  duration: 0.3
 --- !u!114 &2730099219130317301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,8 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4835f8f04de74fc88fe60b4b7ffaa4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.SlidingModule
-  duration: 0.3
   speed: 25
+  duration: 0.3
 --- !u!114 &8716134386961723169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e45102874de42879bd1be9d48298bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.BackwardsModule
-  duration: 0.3
   speed: 25
+  duration: 0.3
   distance: 2.3
   bypass: Passthrough

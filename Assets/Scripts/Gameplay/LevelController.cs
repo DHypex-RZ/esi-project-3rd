@@ -24,7 +24,7 @@ namespace Gameplay
 		void Start()
 		{
 			foreach (Group enemies in enemiesList) _remaining += enemies.count;
-			GenerateAnEnemy();
+			GenerateEnemies();
 		}
 
 		void Update()
@@ -33,7 +33,7 @@ namespace Gameplay
 			if(player.health.live && container.childCount == 0) canvas.WinMenu();
 		}
 
-		async void GenerateAnEnemy()
+		async void GenerateEnemies()
 		{
 			while (_remaining > 0 && player.health.live)
 			{

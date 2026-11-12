@@ -19,7 +19,7 @@ namespace Gameplay.Player.Modules
 		
 		public void ReceiveDamage(int damage)
 		{
-			controller.animator.Play("Damaged");
+			controller.animation.Play("Damaged");
 			_currentHealth -= damage;
 			canvas.UpdateHealth(health, live ? _currentHealth : 0);
 			if (!live) canvas.RetryMenu();

@@ -5,11 +5,17 @@ using static Gameplay.Player.PlayerController;
 
 namespace Gameplay.AI
 {
-	[RequireComponent(typeof(MovementModule), typeof(AttackModule), typeof(ScoreModule))]
+	[RequireComponent(typeof(MovementModule), typeof(AttackModule), typeof(HealthModule))]
 	public class EnemyController : MonoBehaviour
 	{
+		/*static float _multiplier;
+		static int totalScore { get; set; }
+		static int count { get; set; }*/
+		
+		[SerializeField, Min(0)] int score;
+		
 		internal MovementModule movement { get; private set; }
-		internal ScoreModule score { get; private set; }
+		internal HealthModule health { get; private set; }
 		internal SpriteRenderer sprite { get; private set; }
 		internal Animator animator { get; private set; }
 		AttackModule attack { get; set; }
@@ -19,15 +25,23 @@ namespace Gameplay.AI
 		{
 			movement = GetComponent<MovementModule>();
 			attack = GetComponent<AttackModule>();
-			score = GetComponent<ScoreModule>();
+			health = GetComponent<HealthModule>();
 			sprite = GetComponent<SpriteRenderer>();
 			animator = GetComponent<Animator>();
 			collider = GetComponent<Collider2D>();
 		}
 
-		void Update() { if(!player.health.live) EnableModules(false); }
+		void Update() { if(!player.health.live) EnableModules(false); } // CalculateScore(); canvas.UpdateScore(totalScore);
+		
+		/*void CalculateScore()
+		{
+			count++;
+			_multiplier = 1 + count / 5 * 0.5f;
+			totalScore += Mathf.RoundToInt(score * _multiplier);
+			canvas.UpdateMultiplier(_multiplier);
+		}*/
 
-		internal void EnableModules(bool on = true) => collider.enabled = movement.enabled = attack.enabled = score.enabled = on;
+		internal void EnableModules(bool on = true) => collider.enabled = movement.enabled = attack.enabled = health.enabled = on;
 
 		[Serializable] public class Group
 		{

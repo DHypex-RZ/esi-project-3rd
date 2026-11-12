@@ -142,7 +142,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 2.56}
   m_EdgeRadius: 0
 --- !u!50 &5074670326141024014
 Rigidbody2D:
@@ -205,6 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b10b7fad364b5a93c71d3421e5866a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.EnemyController
+  score: 10
 --- !u!114 &8325765532661376859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.MovementModule
   speed: 15
-  stop: 2
+  stop: 2.5
   layer:
     serializedVersion: 2
     m_Bits: 72
@@ -248,5 +249,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8020460cbe1f4874b7119dc6292ba66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.ScoreModule
-  hitPoints: 1
-  score: 10
+  lifePoints: 1

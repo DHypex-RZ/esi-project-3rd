@@ -29,7 +29,7 @@ namespace Gameplay.AI.Modules.Extra
 
 		void Update()
 		{
-			if (!done) return;
+			if (controller.health.hit) return;
 
 			if (_first.done)
 			{
@@ -42,7 +42,5 @@ namespace Gameplay.AI.Modules.Extra
 				_second.enabled = false;
 			}
 		}
-
-		void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("PlayerAttack") && controller.score.live) done = true; }
 	}
 }

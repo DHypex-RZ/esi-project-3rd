@@ -9,8 +9,7 @@ namespace Gameplay.AI.Modules.Base
 		[SerializeField, Min(0)] internal float stop;
 		[SerializeField] LayerMask layer;
 
-		internal bool inFrontOfPlayer => Mathf.Approximately(Vector2.Distance(transform.position, player.transform.position), Mathf.Abs(stop + gap));
-		internal float gap = .5f;
+		internal bool inFrontOfPlayer => Mathf.Approximately(Vector2.Distance(transform.position, player.transform.position), Mathf.Abs(stop) + player.collider.size.x / 2);
 
 		Vector2 _target;
 
@@ -34,7 +33,6 @@ namespace Gameplay.AI.Modules.Base
 		{
 			controller.sprite.flipX = !controller.sprite.flipX;
 			stop = -stop;
-			gap = -gap;
 		}
 	}
 }

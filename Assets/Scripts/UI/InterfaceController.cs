@@ -16,6 +16,7 @@ namespace UI
 		[SerializeField] Text scoreText;
 		[SerializeField] Text multiplierText;
 		[SerializeField] Image healthSprite;
+		[SerializeField] Text countText;
 
 		bool _paused;
 
@@ -26,6 +27,7 @@ namespace UI
 		public void RetryMenu() => retryMenu.SetActive(true);
 		public void WinMenu() => winMenu.SetActive(true);
 		public void UpdateHealth(float health, float currentHealth) => healthSprite.fillAmount = currentHealth / health;
+		public void UpdateCount(int remaining) => countText.text = remaining.ToString();
 
 		public void Pause(bool pause)
 		{

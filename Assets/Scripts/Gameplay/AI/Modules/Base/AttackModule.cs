@@ -14,15 +14,16 @@ namespace Gameplay.AI.Modules.Base
 
 		async void Attack()
 		{
-		_attacking = true;
-		await Awaitable.WaitForSecondsAsync(cooldown);
+			_attacking = true;
+			await Awaitable.WaitForSecondsAsync(cooldown);
 
-		if(!controller.score.live || !controller.movement.inFrontOfPlayer) return;
+			if(!controller.health.live || !controller.movement.inFrontOfPlayer) return;
 
-		controller.animator.Play("Attacking");
-		_attacking = false;
+			controller.animator.Play("Attacking");
+			_attacking = false;
 		}
 
 		void AttackPlayer() => player.health.ReceiveDamage(damage);
+		internal void PunishPlayer() => controller.animator.Play("Attacking"); 
 	}
 }

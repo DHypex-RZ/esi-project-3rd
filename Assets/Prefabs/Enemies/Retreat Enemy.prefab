@@ -24,12 +24,20 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.654902
       objectReference: {fileID: 0}
+    - target: {fileID: 3619389231157825261, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: score
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: score
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: hitPoints
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: lifePoints
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6706578199362084766, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
@@ -141,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e45102874de42879bd1be9d48298bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.BackwardsModule
-  done: 0
   speed: 25
   duration: 0.3
   distance: 2.3

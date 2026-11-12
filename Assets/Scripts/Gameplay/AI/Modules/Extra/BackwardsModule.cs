@@ -20,13 +20,21 @@ namespace Gameplay.AI.Modules.Extra
 			_mask = gameObject.layer;
 		}
 
-		void Update() { if (_retreating) transform.position = Vector2.MoveTowards(transform.position, _target, speed * Time.deltaTime); }
+		void Update()
+		{
+			if (controller.health.hit)
+			{
+				SetDestination();
+				controller.health.hit = false;
+			} 
+			if (_retreating) transform.position = Vector2.MoveTowards(transform.position, _target, speed * Time.deltaTime);
+		}
 
 		async void SetDestination()
 		{
 			gameObject.layer = LayerMask.NameToLayer(bypass);
 			controller.EnableModules(false);
-			_target = player.transform.position + new Vector3(distance * controller.movement.stop + controller.movement.gap, 0);
+			_target = player.transform.position + new Vector3(distance * controller.movement.stop, 0);
 			_retreating = true;
 			await Awaitable.WaitForSecondsAsync(duration);
 			_retreating = false;
@@ -34,7 +42,5 @@ namespace Gameplay.AI.Modules.Extra
 			gameObject.layer = _mask;
 			done = true;
 		}
-
-		void OnTriggerEnter2D(Collider2D other) { if (enabled && other.CompareTag("PlayerAttack") && controller.score.live) SetDestination(); }
 	}
 }

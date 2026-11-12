@@ -11,7 +11,15 @@ namespace Gameplay.AI.Modules.Extra
 		Vector2 _target;
 		bool _sliding;
 
-		void Update() { if (_sliding) Slide(); }
+		void Update()
+		{
+			if (controller.health.hit)
+			{
+				SetDestination();
+				controller.health.hit = false;
+			}
+			if (_sliding) Slide();
+		}
 
 		void Slide() { transform.position = Vector2.MoveTowards(transform.position, _target, speed * Time.deltaTime); }
 
@@ -19,14 +27,12 @@ namespace Gameplay.AI.Modules.Extra
 		{
 			controller.EnableModules(false);
 			controller.movement.InvertValues();
-			_target = player.transform.position + new Vector3(controller.movement.stop + controller.movement.gap, 0);
+			_target = player.transform.position + new Vector3(controller.movement.stop, 0);
 			_sliding = true;
 			await Awaitable.WaitForSecondsAsync(duration);
 			_sliding = false;
 			controller.EnableModules();
 			done = true;
 		}
-
-		void OnTriggerEnter2D(Collider2D other) { if (enabled && other.CompareTag("PlayerAttack") && controller.score.live) SetDestination(); }
 	}
 }

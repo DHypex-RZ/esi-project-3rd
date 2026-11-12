@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Color.g
       value: 0.47058824
       objectReference: {fileID: 0}
+    - target: {fileID: 3619389231157825261, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: score
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: lives
       value: 2
@@ -30,6 +34,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: hitPoints
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: lifePoints
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6706578199362084766, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
