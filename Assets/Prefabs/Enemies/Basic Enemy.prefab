@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 9051849562650695572}
   - component: {fileID: 8287255070977482893}
   - component: {fileID: 4950976849748993347}
-  - component: {fileID: 5074670326141024014}
   - component: {fileID: 6136933190959304836}
   - component: {fileID: 3619389231157825261}
   - component: {fileID: 8325765532661376859}
@@ -144,33 +143,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 2.56}
   m_EdgeRadius: 0
---- !u!50 &5074670326141024014
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7268592339720513454}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.1
-  m_LinearDamping: 1
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!95 &6136933190959304836
 Animator:
   serializedVersion: 7
@@ -218,11 +190,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02678a19c15c4e5babcb2b5dc6ee3935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.MovementModule
-  speed: 15
+  speed: 12
+  reductionByHp: 2
   stop: 2.5
   layer:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 8
 --- !u!114 &477377330494874687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,4 +222,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8020460cbe1f4874b7119dc6292ba66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.ScoreModule
-  lifePoints: 1
+  healthPoints: 1

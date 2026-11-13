@@ -5,25 +5,24 @@ namespace Gameplay.AI.Modules.Base
 {
 	public class AttackModule: ModuleController
 	{
-		[SerializeField, Min(0)] int damage;
+		[SerializeField, Min(0)] internal int damage;
 		[SerializeField, Min(0)] float cooldown;
 
 		bool _attacking;
 
-		protected void Update() { if (controller.movement.inFrontOfPlayer && !_attacking) Attack(); }
+		protected void Update() { if (ctl.mvt.inFrontOfPlayer && !_attacking) Attack(); }
 
 		async void Attack()
 		{
 			_attacking = true;
 			await Awaitable.WaitForSecondsAsync(cooldown);
 
-			if(!controller.health.live || !controller.movement.inFrontOfPlayer) return;
+			if(!ctl.hlt.live || !ctl.mvt.inFrontOfPlayer || ctl.hlt.hit || !player.hlt.live) return;
 
-			controller.animator.Play("Attacking");
+			PunishPlayer();
 			_attacking = false;
 		}
 
-		void AttackPlayer() => player.health.ReceiveDamage(damage);
-		internal void PunishPlayer() => controller.animator.Play("Attacking"); 
+		internal void PunishPlayer() => ctl.animator.Play("Attacking");
 	}
 }

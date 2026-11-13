@@ -40,6 +40,10 @@ PrefabInstance:
       propertyPath: lifePoints
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3757486928446963092, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: healthPoints
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6706578199362084766, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.052792188

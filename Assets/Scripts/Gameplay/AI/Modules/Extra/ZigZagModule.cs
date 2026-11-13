@@ -29,7 +29,7 @@ namespace Gameplay.AI.Modules.Extra
 
 		void Update()
 		{
-			if (controller.health.hit) return;
+			if (ctl.hlt.hit) return;
 
 			if (_first.done)
 			{

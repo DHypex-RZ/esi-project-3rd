@@ -6,14 +6,19 @@ namespace Gameplay.AI.Modules.Base
 	public class MovementModule: ModuleController
 	{
 		[SerializeField, Min(0)] float speed;
+		[SerializeField, Min(0.1f)] float reductionByHp; 
 		[SerializeField, Min(0)] internal float stop;
 		[SerializeField] LayerMask layer;
 
-		internal bool inFrontOfPlayer => Mathf.Approximately(Vector2.Distance(transform.position, player.transform.position), Mathf.Abs(stop) + player.collider.size.x / 2);
+		internal bool inFrontOfPlayer => Mathf.Approximately(Vector2.Distance(transform.position, player.transform.position), Mathf.Abs(stop) + player.box.size.x / 2);
 
 		Vector2 _target;
 
-		void Start() { if (transform.position.x < player.transform.position.x) InvertValues(); }
+		void Start()
+		{
+			speed -= ctl.hlt.healthPoints * reductionByHp;
+			if (transform.position.x < player.transform.position.x) InvertValues();
+		}
 
 		void FixedUpdate()
 		{
@@ -31,7 +36,7 @@ namespace Gameplay.AI.Modules.Base
 
 		internal void InvertValues()
 		{
-			controller.sprite.flipX = !controller.sprite.flipX;
+			ctl.sprite.flipX = !ctl.sprite.flipX;
 			stop = -stop;
 		}
 	}

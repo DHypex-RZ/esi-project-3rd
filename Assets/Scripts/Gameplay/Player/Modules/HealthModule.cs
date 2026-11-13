@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
-using static UI.InterfaceController;
+using UnityEngine.UI;
+using static Gameplay.LevelController;
+using static UI.MenuController;
 
 namespace Gameplay.Player.Modules
 {
 	public class HealthModule: ModuleController
 	{
 		[SerializeField] int health;
+		[SerializeField] Image healthBar;
 		
 		float _currentHealth;
 
-		public bool live => _currentHealth > 0;
+		internal bool live => _currentHealth > 0;
 
 		protected override void Awake()
 		{
@@ -19,10 +22,11 @@ namespace Gameplay.Player.Modules
 		
 		public void ReceiveDamage(int damage)
 		{
-			controller.animation.Play("Damaged");
+			ctl.animator.Play("Hurt");
 			_currentHealth -= damage;
-			canvas.UpdateHealth(health, live ? _currentHealth : 0);
-			if (!live) canvas.RetryMenu();
+			level.UpdateScore();
+			healthBar.fillAmount = live ? _currentHealth / health : 0;
+			if (!live) hud.RetryMenu();
 		}
 	}
 }

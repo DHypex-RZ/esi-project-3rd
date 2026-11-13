@@ -13,10 +13,10 @@ namespace Gameplay.AI.Modules.Extra
 
 		void Update()
 		{
-			if (controller.health.hit)
+			if (ctl.hlt.hit)
 			{
 				SetDestination();
-				controller.health.hit = false;
+				ctl.hlt.hit = false;
 			}
 			if (_sliding) Slide();
 		}
@@ -25,13 +25,14 @@ namespace Gameplay.AI.Modules.Extra
 
 		async void SetDestination()
 		{
-			controller.EnableModules(false);
-			controller.movement.InvertValues();
-			_target = player.transform.position + new Vector3(controller.movement.stop, 0);
+			ctl.EnableModules(false);
+			ctl.mvt.InvertValues();
+			_target = player.transform.position + new Vector3(ctl.mvt.stop, 0);
 			_sliding = true;
 			await Awaitable.WaitForSecondsAsync(duration);
 			_sliding = false;
-			controller.EnableModules();
+			if(!ctl.hlt.live) return;
+			ctl.EnableModules();
 			done = true;
 		}
 	}
