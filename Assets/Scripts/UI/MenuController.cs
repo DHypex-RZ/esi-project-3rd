@@ -5,33 +5,29 @@ namespace UI
 {
 	public class MenuController : MonoBehaviour
 	{
-		public static MenuController hud { get; private set; }
-
-		const float SECURE_TIME = 0.75f;
+		public static MenuController Menu { get; private set; }
 
 		[SerializeField] GameObject pauseMenu;
 		[SerializeField] GameObject retryMenu;
 		[SerializeField] GameObject winMenu;
 
-		bool _paused;
+		void Awake() => Menu = this;
 
-		void Awake() => hud = this;
+		public void PauseMenu(bool pause) => SetMenu(pauseMenu, pause, pause);
+		public void RetryMenu() => SetMenu(retryMenu);
+		public void WinMenu() => SetMenu(winMenu);
 
-		public void RetryMenu() => retryMenu.SetActive(true);
-		public void WinMenu() => winMenu.SetActive(true);
-
-		public void Pause(bool pause)
+		void SetMenu(GameObject menu, bool active = true, bool pause = false)
 		{
 			Time.timeScale = pause ? 0 : 1;
-			pauseMenu.SetActive(pause);
+			menu.SetActive(active);
 		}
 
 		public async void Retry()
 		{
-			await Awaitable.WaitForSecondsAsync(SECURE_TIME);
+			await Awaitable.WaitForSecondsAsync(0.75f);
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
-
 		public void Quit() => Application.Quit();
 	}
 }

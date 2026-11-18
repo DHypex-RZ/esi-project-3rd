@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 292981408384831148, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 292981408384831148, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
+      propertyPath: m_Color.r
+      value: 0.1764706
+      objectReference: {fileID: 0}
     - target: {fileID: 477377330494874687, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: damage
       value: 20
@@ -35,18 +43,6 @@ PrefabInstance:
     - target: {fileID: 7268592339720513454, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: m_Name
       value: Zig Zag Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287255070977482893, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
-      propertyPath: m_Color.b
-      value: 0.7176471
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287255070977482893, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
-      propertyPath: m_Color.g
-      value: 0.18452081
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287255070977482893, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
-      propertyPath: m_Color.r
-      value: 0.17254902
       objectReference: {fileID: 0}
     - target: {fileID: 9051849562650695572, guid: 8cab81959868feb4f8ccb24fd16ab8ea, type: 3}
       propertyPath: m_LocalPosition.x
@@ -146,6 +142,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Project.Core::Gameplay.AI.Modules.BackwardsModule
   speed: 25
-  duration: 0.3
+  duration: 0.5
   distance: 2.3
-  bypass: Passthrough
